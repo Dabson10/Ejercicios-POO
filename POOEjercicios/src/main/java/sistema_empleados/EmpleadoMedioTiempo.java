@@ -16,24 +16,43 @@ package sistema_empleados;
 
 public class EmpleadoMedioTiempo extends Empleado{
     //Atributos de la clase EmpleadoMedioTiempo
-    private String horasTrabajadas ;
+    private int horasTrabajadas ;
     private float pagoPorHora;
     
-    public EmpleadoMedioTiempo(String nombre, int ID, float salarioBase, String horasTrabajadas, float pagoPorHora){
+    public EmpleadoMedioTiempo(String nombre, String ID, float salarioBase, int horasTrabajadas, float pagoPorHora){
         super(nombre, ID, salarioBase);
-        this.horasTrabajadas = horasTrabajadas;
-        this.pagoPorHora = pagoPorHora;
+        if(pagoPorHora > 0 && horasTrabajadas > 0){
+            this.horasTrabajadas = horasTrabajadas;
+            this.pagoPorHora = pagoPorHora;
+        }else{
+            System.out.println("Ingrese una hora valida y un pago valido.");
+        }
     }
+
+    public int getHorasTrabajadas(){
+        return horasTrabajadas;
+    }
+    public float getPagoPorHora(){
+        return pagoPorHora;
+    }
+
+
+    @Override
+    public float total(){
+        return getSalarioBase() + (horasTrabajadas * pagoPorHora);
+    }
+
     @Override
     public String mostrarDatos() {
-        return "========================\n"
+        return "--------------------------------\n"
                 + "El empleado es: "
                 + "\nNombre: " + getNombre()
                 + "\nID: " + getID()
                 + "\nSalario base: " + getSalarioBase()
                 + "\nHoras trabajadas: " + horasTrabajadas
                 + "\nPago por hora: " + pagoPorHora
-                + "\n========================"
+                + "\nSalario + PagoxHora: " + (getSalarioBase() + (pagoPorHora * horasTrabajadas))
+                + "\n--------------------------------"
                 ;
     }
 }

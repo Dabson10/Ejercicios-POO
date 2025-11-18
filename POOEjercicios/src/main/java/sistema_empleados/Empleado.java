@@ -8,13 +8,13 @@ public class Empleado {
 
     //Atributos de la clase Empleado
     protected String nombre;
-    protected int ID;
+    protected String ID;
     protected float salarioBase;
 
     //Constructor de la clase
-    public Empleado(String nombre, int ID, float salarioBase) {
+    public Empleado(String nombre, String ID, float salarioBase) {
         //Si el salario base es menor a cero entonces no agregamos nada
-        if (salarioBase < 0) {
+        if (salarioBase <= 0) {
             System.out.println("Ingrese un valor positivo");
         } else {
             this.nombre = nombre;
@@ -28,7 +28,7 @@ public class Empleado {
         return nombre;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
@@ -36,14 +36,19 @@ public class Empleado {
         return salarioBase;
     }
 
+    //Sobreescritura de metodos
+
+    public float total(){
+        return getSalarioBase() ;
+    }
     //Metodo para mostrar los datos del empleado.
     public String mostrarDatos() {
-        return "========================\n"
+        return "--------------------------------\n"
                 + "El empleado es: "
                 + "\nNombre: " + nombre
                 + "\nID: " + ID
                 + "\nSalario base: " + salarioBase
-                + "\n========================"
+                + "\n--------------------------------"
                 ;
     }
 

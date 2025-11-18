@@ -14,17 +14,37 @@ public class Gerente extends Empleado {
     private int empleadosACargo;
     private float bonoExtra;
 
-    public Gerente(String nombre, int ID, float salarioBase, String departamento, int empleadosACargo, float bonoExtra) {
+    public Gerente(String nombre, String ID, float salarioBase, String departamento, int empleadosACargo, float bonoExtra) {
         super(nombre, ID, salarioBase);
-        this.departamento = departamento;
-        this.empleadosACargo = empleadosACargo;
-        this.bonoExtra = bonoExtra;
+        if(bonoExtra > 0 && empleadosACargo > 0){
+            this.departamento = departamento;
+            this.empleadosACargo = empleadosACargo;
+            this.bonoExtra = bonoExtra;
+        }
     }
-    
+
+    public String getDepartamento(){
+        return departamento;
+    }
+    public int getEmpleadosACargo(){
+        return empleadosACargo;
+    }
+    public float getBonoExtra(){
+        return bonoExtra;
+    }
+
+
+
+    //Funcion para sumar el total de bono y salario, mas que nada para solo llamar a la funcion desde el main
+    @Override
+    public float total(){
+        return getSalarioBase() + bonoExtra;
+    }
+
     
         @Override
     public String mostrarDatos() {
-        return "========================\n" 
+        return "--------------------------------\n"
                 + "El empleado es: "
                 + "\nNombre: " + getNombre()
                 + "\nID: " + getID()
@@ -32,7 +52,8 @@ public class Gerente extends Empleado {
                 + "\nDepartamento: " + departamento
                 + "\nEmpleados a cargo: " + empleadosACargo
                 + "\nBono extra: " + bonoExtra
-                + "\n========================"
+                + "\nSueldo + bono: " + (getSalarioBase() + bonoExtra)
+                + "\n--------------------------------"
                 ;
     }
 }
