@@ -7,49 +7,55 @@ public class Efectivo extends PagoFisico {
 
     //Metodos
 
-    public Efectivo(String nombreCliente, float totalAPagar, String nombreSucursal, float pagaCon){
+    public Efectivo(String nombreCliente, float totalAPagar, String nombreSucursal, float pagaCon) {
         super(nombreCliente, totalAPagar, nombreSucursal);
-        if(pagaCon >= totalAPagar){
-            //Si es mayor entonces procedemos con el pago
-            this.pagaCon = pagaCon;
-        }else{
-            System.out.println("Ingrese una cantidad correcta");
-            this.pagaCon = 0f;
-        }
+        this.pagaCon = pagaCon;
+
 
     }
 
 
-    static Scanner scanner = new Scanner(System.in);
+//    static Scanner scanner = new Scanner(System.in);
 
 
     //Metodos para validar el metodo de pago.
-    public boolean validacionPago(){
+    @Override
+    public boolean validacionPago(Scanner sc) {
         boolean validacion = false;
-        int opcion =0;
-        do{
-            System.out.println("""
-                    ¿Ya recibio el pago del cliente?
-                    1.Si.
-                    2.No.
-                    """);
-            opcion = scanner.nextInt();
+        float pagoCon = 0f;
+        do {
+            System.out.println("¿Con cuanto paga el cliente?");
+            pagoCon = sc.nextFloat();
 
-            if(opcion == 1 ){
+            if (pagoCon >= getTotalApagar()) {
+                comisiones();
+                System.out.println("El cambio es de: $" + (pagoCon - getTotalApagar()));
                 validacion = true;
+            } else {
+                System.out.println("Ingrese una cantidad correcta");
             }
-        }while(opcion != 1);
+        } while (!validacion);
 
         return validacion;
     }
 
+
+
     //Metodo para generar una comision sobre el tipo de metodo de pago
-    public float comisiones(){
+    public float comisiones() {
         System.out.println("El pago no generara comisión ya que es en efectivo.");
         return 0f;
     }
-    public String mostrarDatos(){
-        return "";
+
+    public String mostrarDatos() {
+
+        return "La venta fue exitosa" +
+                "\nCliente: " + getNombreCliente() +
+                "\nFecha: " + getFechaDePago() +
+                "\nPago con: " + pagaCon +
+                "\nTotal a pagar: " + getTotalApagar() +
+                "\nEstado: " + getEstadoPago() +
+                "\nPago exitosamente.";
     }
 
 }

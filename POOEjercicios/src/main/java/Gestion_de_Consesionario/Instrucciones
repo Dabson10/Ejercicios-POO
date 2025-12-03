@@ -1,0 +1,7 @@
+Gestion de concesionario
+Lo que se busca es modelar vehiculos, ten en cuenta que los vehiculos son eso vehiculos,
+no se sabe que tipo ni que marca.
+
+Modelar la estructura de diferentes tipos de vehículos en un concesionario,
+asegurando que todos compartan una base común, pero con comportamientos especializados,
+aplicando los 4 pilares de la POO.

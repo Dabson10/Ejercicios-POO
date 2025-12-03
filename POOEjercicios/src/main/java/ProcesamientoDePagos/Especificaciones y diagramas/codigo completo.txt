@@ -1,0 +1,214 @@
+//Clase padre
+
+public abstract class MetodoDePago {
+    //Atributos de la clase
+    protected String nombreCliente;
+    protected String estadoPago = "Pendiente";
+    protected float totalApagar;
+    protected LocalDate fechaDePago = null;
+
+    //Metodo constructos y metodos abstractos de la clase.
+    public MetodoDePago(String nombreCliente, float totalApagar){
+        if(totalApagar > 0){
+            //Si es mayor a cero el totalAPagar entonces procedemos con el guardado de datos.
+            this.nombreCliente = nombreCliente;
+            this.totalApagar = totalApagar;
+        }else{
+            System.out.println("Ingrese una cantidad valiada para guardar el historial.");
+        }
+    }
+
+    public String getNombreCliente(){
+        return nombreCliente;
+    }
+    public String getEstadoPago(){
+        return estadoPago;
+    }
+    public float getTotalApagar(){
+        return totalApagar;
+    }
+    //Se obtendra la fecha en el que se pago el producto.
+    public LocalDate getFechaDePago(){
+        return fechaDePago;
+    }
+    //Metodo para validar el pago, con base en este método los siguientes metodos funcionarán y realizaran ciertas acciones.
+    public abstract boolean validacionPago();
+    //Este metodo retornara y sumara los valores de la comision y con lo que se pagara.
+    public abstract float comisiones();
+    //Solo servira para mostrar los datos de la venta.
+    public abstract String mostrarDatos();
+}
+//Primera clase hija PagoFisico abstracta
+public abstract class PagoFisico extends MetodoDePago{
+    protected String nombreSucursal;
+    public PagoFisico(String nombreCliente, float totalAPagar, String nombreSucursal){
+        super(nombreCliente, totalAPagar);
+        this.nombreSucursal = nombreSucursal;
+    }
+}
+//primera clase nieta, esta es hija de PagoFisico
+public class Efectivo extends PagoFisico {
+    private float pagaCon;
+
+    //Metodos
+
+    public Efectivo(String nombreCliente, float totalAPagar, String nombreSucursal, float pagaCon) {
+        super(nombreCliente, totalAPagar, nombreSucursal);
+        this.pagaCon = pagaCon;
+
+
+    }
+
+
+    static Scanner scanner = new Scanner(System.in);
+
+
+    //Metodos para validar el metodo de pago.
+    public boolean validacionPago() {
+        boolean validacion = false;
+        float pagoCon = 0f;
+        do {
+            System.out.println("¿Con cuanto paga el cliente?");
+            pagoCon = scanner.nextFloat();
+
+            if (pagoCon >= getTotalApagar()) {
+                System.out.println("El cambio es de: $" + (getTotalApagar() - pagoCon));
+                validacion = true;
+            } else {
+                System.out.println("Ingrese una cantidad correcta");
+            }
+        } while (!validacion);
+
+        return validacion;
+    }
+
+    //Metodo para generar una comision sobre el tipo de metodo de pago
+    public float comisiones() {
+        System.out.println("El pago no generara comisión ya que es en efectivo.");
+        return 0f;
+    }
+
+    public String mostrarDatos() {
+
+        return "La venta fue exitosa" +
+                "Cliente: " + getNombreCliente() +
+                "Fecha: " + getFechaDePago() +
+                "Pago con: " + pagaCon +
+                "Total a pagar: " + getTotalApagar() +
+                "Estado: " + getEstadoPago() +
+                "Pago exitosamente.";
+    }
+
+}
+//Segunda clase Hija, esta es directa y no es abstracta
+
+public class Tarjeta extends MetodoDePago {
+
+    private String nombreDelBanco;
+    private int numeroDeCuenta;
+    private String tipoDeTarjeta;
+    private float saldo;
+
+    public Tarjeta(String nombreCliente, float totalAPagar, String nombreDelBanco,
+                   int numeroDeCuenta, String tipoDeTarjeta, float saldo){
+        super(nombreCliente, totalAPagar);
+        this.nombreDelBanco = nombreDelBanco;
+        this.numeroDeCuenta = numeroDeCuenta;
+        this.saldo = saldo;
+        this.tipoDeTarjeta = tipoDeTarjeta;
+    }
+
+    @Override
+    public boolean validacionPago() {
+    return false;
+    }
+    @Override
+    public float comisiones(){
+        return 0f;
+    }
+    @Override
+    public String mostrarDatos(){
+        return"";
+    }
+}
+//Tercera clase hija esta es abstracta PagoEnLinea
+public abstract class PagoEnLinea extends MetodoDePago{
+
+    protected String correoDeValidacion;
+
+    public PagoEnLinea(String nombreCliente,float totalAPagar, String correoDeValidacion ){
+        super(nombreCliente, totalAPagar);
+        this.correoDeValidacion = correoDeValidacion;
+    }
+
+}
+//Clase nieta por primera clase hija de PagoEnLinea
+ public class Transferencia extends PagoEnLinea{
+     private int numCuentaCliente;
+
+     public Transferencia(String nombreCliente, float totalAPagar,String correoDeValidacion, int numCuentaCliente){
+         super(nombreCliente, totalAPagar, correoDeValidacion);
+         this.numCuentaCliente = numCuentaCliente;
+     }
+
+
+     @Override
+     public boolean validacionPago(){
+         return false;
+     }
+     @Override
+     public float comisiones(){
+      return 0f;
+     }
+     public String mostrarDatos(){
+         return"";
+     }
+ }
+ //Segunda clase hija de pagoenlinea
+ public class PayPal extends PagoEnLinea{
+
+     private String correoCliente;
+
+     public PayPal(String nombreCliente, float totalAPagar, String correoDeValidacion, String correoCliente){
+         super(nombreCliente, totalAPagar, correoDeValidacion);
+         this.correoCliente = correoCliente;
+     }
+
+     //Metodos abstractos.
+
+     @Override
+     public boolean validacionPago(){
+         return false;
+     }
+     @Override
+     public float comisiones(){
+         return 0f;
+     }
+     @Override
+     public String mostrarDatos(){
+         return "";
+     }
+ }
+ //Tercera clase hija de pagoenlinea
+ public class Criptomoneda extends PagoEnLinea{
+     private String correoEmpresa = "empresa@gmail.com";
+     private String correoCliente ;
+
+     public Criptomoneda(String nombreCliente,float totalAPagar, String correoDeValidacion, String correoCliente){
+         super(nombreCliente, totalAPagar, correoDeValidacion);
+         this.correoCliente = correoCliente;
+     }
+     //Metodos abstractos
+     @Override
+     public boolean validacionPago(){
+         return false;
+     }
+     @Override
+     public float comisiones(){
+         return 0f;
+     }
+     @Override
+     public String mostrarDatos(){
+         return "";
+     }
+ }
