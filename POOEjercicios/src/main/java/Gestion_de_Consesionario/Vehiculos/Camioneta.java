@@ -14,13 +14,13 @@ public class Camioneta extends Vehiculo {
     }
     @Override
     public String mostrarDatos(){
-        return "\nDeportivo" +
-                "\nMarca: " + getMarca() +
+        return  "Marca: " + getMarca() +
                 "\nModelo: " + getModelo() +
                 "\nAño: " +  getYear() +
                 "\nLimite de pasajeros: " + limiteDePasajeros +
                 "\nTipo: " + pesoMaximo +
-                "\nPrecio: " + getPrecio();
+                "\nPrecio: " + getPrecio()
+                + "\n";
     }
 
     @Override

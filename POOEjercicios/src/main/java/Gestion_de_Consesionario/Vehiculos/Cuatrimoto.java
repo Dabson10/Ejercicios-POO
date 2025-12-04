@@ -4,24 +4,24 @@ import Gestion_de_Consesionario.Vehiculo;
 
 public class Cuatrimoto extends Vehiculo {
 
-    private String tipoCuatriMoto;
+    private String tipoCuatrimoto;
     private int pesoMaximo;
 
-    public Cuatrimoto(String marca, String modelo, int year, float precio, int disponibles, int pesoMaximo, String tipoCuatriMoto){
+    public Cuatrimoto(String marca, String modelo, int year, float precio, int disponibles, int pesoMaximo, String tipoCuatrimoto){
         super(marca, modelo, year, precio, disponibles);
         this.pesoMaximo = pesoMaximo;
-        this.tipoCuatriMoto = tipoCuatriMoto;
+        this.tipoCuatrimoto = tipoCuatrimoto;
     }
 
     @Override
     public String mostrarDatos(){
-        return "\nDeportivo" +
-                "\nMarca: " + getMarca() +
-                "\nModelo" + getModelo() +
+        return "Marca: " + getMarca() +
+                "\nModelo: " + getModelo() +
                 "\nAño: " +  getYear() +
-                "\nTipo de deportivo: " + tipoCuatriMoto +
+                "\nTipo de deportivo: " + tipoCuatrimoto +
                 "\nTipo: " + pesoMaximo+
-                "\nPrecio: " + getPrecio();
+                "\nPrecio: " + getPrecio()
+                + "\n";
     }
 
     @Override

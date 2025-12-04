@@ -13,13 +13,13 @@ public class Deportivo extends Vehiculo {
 
     @Override
     public String mostrarDatos(){
-        return "\nDeportivo" +
-                "\nMarca: " + getMarca() +
-                "\nModelo" + getModelo() +
+        return  "Marca: " + getMarca() +
+                "\nModelo: " + getModelo() +
                 "\nAño: " +  getYear() +
                 "\nLimite de KM: " + limiteKM +
                 "\nTipo: " + tipoDeportivo +
-                "\nPrecio: " + getPrecio();
+                "\nPrecio: " + getPrecio()
+                + "\n";
     }
     @Override
     public String mostrarTotal(){

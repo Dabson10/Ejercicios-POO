@@ -16,13 +16,13 @@ public class Moto extends Vehiculo {
 
     @Override
     public String mostrarDatos(){
-        return "\nMoto" +
-                "\nMarca: " + getMarca() +
-                "\nModelo" + getModelo() +
+        return "Marca: " + getMarca() +
+                "\nModelo: " + getModelo() +
                 "\nAño: " +  getYear() +
                 "\nCilindrada: " + cilindrada +
                 "\nTipo: " + tipoDeMoto +
-                "\nPrecio: " + getPrecio();
+                "\nPrecio: " + getPrecio()
+                + "\n" ;
 
     }
 
