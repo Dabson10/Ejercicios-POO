@@ -1,6 +1,6 @@
-package Gestion_de_Consesionario.Vehiculos;
+package Gestion_de_Concesionario.Vehiculos;
 
-import Gestion_de_Consesionario.Vehiculo;
+import Gestion_de_Concesionario.Vehiculo;
 
 public class Camioneta extends Vehiculo {
     private int limiteDePasajeros;
@@ -13,22 +13,20 @@ public class Camioneta extends Vehiculo {
 
     }
     @Override
+    public float impuesto(){
+        return getPrecio() * .30f;
+    }
+    @Override
     public String mostrarDatos(){
         return  "Marca: " + getMarca() +
                 "\nModelo: " + getModelo() +
                 "\nAño: " +  getYear() +
                 "\nLimite de pasajeros: " + limiteDePasajeros +
                 "\nTipo: " + pesoMaximo +
-                "\nPrecio: " + getPrecio()
-                + "\n";
+                "\nPrecio: " + getPrecio() +
+                "\nPrecio con impuestos: "+ (impuesto() + getPrecio()) +
+                "\nDisponibles: " + getDisponibles() +
+                "\nPrecio totalitario: " + calcularTotal() +
+                "\n";
     }
-
-    @Override
-    public String mostrarTotal(){
-        return "Valor total Motos." +
-                "\nCantidad: " + getDisponibles() +
-                "\nPrecio unitario: " + getPrecio() +
-                "\nPrecio totalitario: " + calcularTotal();
-    }
-
 }

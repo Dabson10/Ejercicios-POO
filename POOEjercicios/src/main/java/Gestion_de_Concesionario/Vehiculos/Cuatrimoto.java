@@ -1,6 +1,6 @@
-package Gestion_de_Consesionario.Vehiculos;
+package Gestion_de_Concesionario.Vehiculos;
 
-import Gestion_de_Consesionario.Vehiculo;
+import Gestion_de_Concesionario.Vehiculo;
 
 public class Cuatrimoto extends Vehiculo {
 
@@ -12,6 +12,10 @@ public class Cuatrimoto extends Vehiculo {
         this.pesoMaximo = pesoMaximo;
         this.tipoCuatrimoto = tipoCuatrimoto;
     }
+    @Override
+    public float impuesto(){
+        return getPrecio() * .10f;
+    }
 
     @Override
     public String mostrarDatos(){
@@ -20,16 +24,10 @@ public class Cuatrimoto extends Vehiculo {
                 "\nAño: " +  getYear() +
                 "\nTipo de deportivo: " + tipoCuatrimoto +
                 "\nTipo: " + pesoMaximo+
-                "\nPrecio: " + getPrecio()
-                + "\n";
+                "\nPrecio: " + getPrecio() +
+                "\nPrecio con impuestos: "+ (impuesto() + getPrecio()) +
+                "\nDisponibles: " + getDisponibles() +
+                "\nPrecio totalitario: " + calcularTotal() +
+                "\n";
     }
-
-    @Override
-    public String mostrarTotal(){
-        return "Valor total Motos." +
-                "\nCantidad: " + getDisponibles() +
-                "\nPrecio unitario: " + getPrecio() +
-                "\nPrecio totalitario: " + calcularTotal();
-    }
-
 }

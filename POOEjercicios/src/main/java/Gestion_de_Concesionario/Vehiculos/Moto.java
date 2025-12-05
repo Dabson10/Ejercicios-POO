@@ -1,6 +1,6 @@
-package Gestion_de_Consesionario.Vehiculos;
+package Gestion_de_Concesionario.Vehiculos;
 
-import Gestion_de_Consesionario.Vehiculo;
+import Gestion_de_Concesionario.Vehiculo;
 
 public class Moto extends Vehiculo {
 
@@ -13,6 +13,10 @@ public class Moto extends Vehiculo {
         this.cilindrada = cilindrada;
         this.tipoDeMoto = tipoDeMoto;
     }
+    @Override
+    public float impuesto(){
+        return getPrecio() * .15f;
+    }
 
     @Override
     public String mostrarDatos(){
@@ -21,17 +25,11 @@ public class Moto extends Vehiculo {
                 "\nAño: " +  getYear() +
                 "\nCilindrada: " + cilindrada +
                 "\nTipo: " + tipoDeMoto +
-                "\nPrecio: " + getPrecio()
-                + "\n" ;
+                "\nPrecio sin impuestos: " + getPrecio() +
+                "\nPrecio con impuestos: "+ (impuesto() + getPrecio()) +
+                "\nDisponibles: " + getDisponibles() +
+                "\nPrecio totalitario: " + calcularTotal() +
+                "\n";
 
     }
-
-    @Override
-    public String mostrarTotal(){
-        return "Valor total Motos." +
-                "\nCantidad: " + getDisponibles() +
-                "\nPrecio unitario: " + getPrecio() +
-                "\nPrecio totalitario: " + calcularTotal();
-    }
-
 }
