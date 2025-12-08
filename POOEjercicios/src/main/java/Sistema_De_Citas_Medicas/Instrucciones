@@ -1,0 +1,82 @@
+=====================================================================================
+  DESCRIPCIÓN
+  Desarrollarás un sistema de gestión para una clínica médica que permita administrar
+  pacientes, personal médico y sus consultas. El sistema debe demostrar
+  dominio de los 4 pilares de POO y seguir principios de código limpio.
+====================================================================================
+
+------------------------------------------------------------------------------------
+            REQUERIMIENTOS FUNCIONALES
+*******************************************************************************
+    1.Gestión de Pacientes
+    La clínica necesita mantener un registro de sus pacientes con la siguiente
+    información:
+
+    Identificador único generado automáticamente
+    Datos personales completos
+    Información de contacto
+    Registro histórico de todas sus consultas
+
+    El sistema debe permitir:
+
+    Dar de alta nuevos pacientes
+    Consultar información de pacientes existentes
+    Actualizar datos de contacto cuando sea necesario
+    Visualizar el historial médico completo
+
+********************************************************************************
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+            2.Gestión de Personal Médico
+    La clínica cuenta con profesionales de diferentes especialidades. Cada médico tiene:
+
+    Identificador único relacionado con su especialidad
+    Información profesional (nombre, especialidad, experiencia)
+    Horario de atención establecido
+    Tarifa base por consulta
+
+    Importante: Considera que cada especialidad tiene características particulares:
+
+    Algunos requieren información adicional específica de su área
+    Los costos de consulta varían según la especialidad y otros factores
+    La duración de las consultas es diferente entre especialidades
+    Algunos procedimientos tienen costos variables
+
+  El sistema debe:
+    Registrar médicos de diferentes especialidades
+    Consultar disponibilidad según horarios
+    Obtener información de médicos por especialidad
+    Gestionar su agenda de consultas
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            3.Gestión de Consultas
+        El núcleo del sistema es la gestión de citas médicas:
+
+    Cada consulta debe tener un identificador único
+    Debe relacionarse con un paciente y un médico específico
+    Incluir fecha, hora y motivo de consulta
+    Tener un estado que evoluciona (pendiente → confirmada → completada)
+    Calcular el costo según el médico y tipo de consulta
+
+        Funcionalidades requeridas:
+
+    Agendar nuevas consultas verificando disponibilidad
+    Consultar citas existentes
+    Modificar estado de las citas
+    Visualizar consultas por diferentes criterios (fecha, médico, paciente)
+    Cancelar citas cuando sea necesario
+
+
+        Reportes y Estadísticas
+    El sistema debe generar información útil para la administración:
+
+    Consultas programadas para el día actual
+    Ingresos generados en un periodo
+    Médicos con mayor demanda
+    Especialidades más solicitadas
+    Análisis de consultas canceladas
+    Identificación de pacientes frecuentes
+
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
