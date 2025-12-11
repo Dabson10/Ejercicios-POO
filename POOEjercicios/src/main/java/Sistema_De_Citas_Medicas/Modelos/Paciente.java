@@ -17,12 +17,23 @@ public class Paciente extends Persona{
         this.correo = correo;
     }
 
-    public void mostrarFechas(){
+    public String mostrarFechas(){
+        StringBuilder fechas = new StringBuilder();
         for(int i = 0; i < this.historialConsultas.size(); i ++ ){
-            System.out.println("Asistio en la fecha: " + historialConsultas.get(i));
+            fechas.append("Asistio en la fecha: ").append(historialConsultas.get(i)).append("\n");
         }
+        return fechas.toString();
     }
 
+    //Agregar fechas nuevas
+    public void setHistorialConsultas(String fecha){
+        if(!fecha.trim().isEmpty()){
+            //Si no esta vacia, entonces agregamos la fecha a la lista
+            historialConsultas.add(fecha);
+        }else{
+            System.out.println("Agrega una fecha correcta.");
+        }
+    }
     @Override
     public String mostrarDatos(){
         String mostrar = "";
@@ -31,12 +42,18 @@ public class Paciente extends Persona{
             //paciente asistio.
             mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +
                       "\nTelefono: " + numeroDeTelefono +
-                      "\nCorreo: " + correo ;
-//                      mostrarFechas();
+                      "\nCorreo: " + correo +
+                      mostrarFechas();
         }else{
-
+            mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +
+                    "\nTelefono: " + numeroDeTelefono +
+                    "\nCorreo: " + correo +
+                    "\nEl paciente es nuevo.";
         }
         return mostrar;
     }
+
+
+
 
 }

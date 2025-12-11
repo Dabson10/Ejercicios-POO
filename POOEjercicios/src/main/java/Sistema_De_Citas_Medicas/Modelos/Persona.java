@@ -20,6 +20,5 @@ public abstract class Persona {
     public String getApellidos(){
         return apellidos;
     }
-
     public abstract String mostrarDatos();
 }
