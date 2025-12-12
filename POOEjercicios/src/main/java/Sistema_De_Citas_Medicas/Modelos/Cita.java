@@ -48,6 +48,10 @@ public class Cita {
     }
 
     //Obtener el total del monto extra y del costo de la cita.
+    /**
+     * La funcion de calcular total no solo suma el costo de la cita más el monto extra, se
+     * calcula el costo de la cita del doctor con un porcentaje con base en la tarifa del doctor.
+     */
     public float calcularTotal(){
         return (costoCita + montoExtra) + (doctorID.getTarifaPorConsulta() * 0.05f);
     }

@@ -7,11 +7,11 @@ import java.util.List;
 //Clase estatica para las clases hijas.
 public class Paciente extends Persona{
     //Atributos de la clase
-    private int numeroDeTelefono;
+    private String numeroDeTelefono;
     private String correo;
     private List<String> historialConsultas = new ArrayList<>();
     //Metodos de la clase
-    public Paciente(String ID, String nombres, String apellidos, int numeroDeTelefono, String correo){
+    public Paciente(String ID, String nombres, String apellidos, String numeroDeTelefono, String correo){
         super(ID, nombres, apellidos);
         this.numeroDeTelefono = numeroDeTelefono;
         this.correo = correo;
@@ -34,6 +34,37 @@ public class Paciente extends Persona{
             System.out.println("Agrega una fecha correcta.");
         }
     }
+
+    //Actualizar correo electronico.
+    public void setCorreo(String correo){
+        if(correo.contains("@")){
+            //Si contiene el @ entonces se guarda
+            this.correo = correo;
+        }else{
+            //Si no lo tiene entonces no procede.
+            System.out.println("Ingrese un correo valido.");
+        }
+    }
+
+    //Actualizar telefono
+    public void setNumeroDeTelefono(String numeroDeTelefono){
+        try{
+            Integer numero = Integer.parseInt(numeroDeTelefono.trim());
+            //Si no devuelve error entonces procedera al IF
+            if(!this.numeroDeTelefono.equals(numeroDeTelefono.trim())){
+                //Si no es igual entonces se guarda
+                this.numeroDeTelefono = numeroDeTelefono;
+            }else{
+                System.out.println("Ingresaste el mismo telefono.");
+            }
+        }catch(Exception e){
+            System.out.println("El numero de telefono tiene caracteres: " + e.getMessage());
+        }
+    }
+
+
+
+
     @Override
     public String mostrarDatos(){
         String mostrar = "";
@@ -43,17 +74,16 @@ public class Paciente extends Persona{
             mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +
                       "\nTelefono: " + numeroDeTelefono +
                       "\nCorreo: " + correo +
+                      "\nID: " + getID() +
                       mostrarFechas();
         }else{
             mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +
                     "\nTelefono: " + numeroDeTelefono +
                     "\nCorreo: " + correo +
+                    "\nID: " + getID() +
                     "\nEl paciente es nuevo.";
         }
         return mostrar;
     }
-
-
-
 
 }
