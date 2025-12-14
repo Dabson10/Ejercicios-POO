@@ -3,6 +3,7 @@ package Sistema_De_Citas_Medicas.Modelos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 //Clase estatica para las clases hijas.
 public class Paciente extends Persona{
@@ -11,10 +12,14 @@ public class Paciente extends Persona{
     private String correo;
     private List<String> historialConsultas = new ArrayList<>();
     //Metodos de la clase
+    //Constructor con parametros
     public Paciente(String ID, String nombres, String apellidos, String numeroDeTelefono, String correo){
         super(ID, nombres, apellidos);
         this.numeroDeTelefono = numeroDeTelefono;
         this.correo = correo;
+    }
+    //Constructor vacio
+    public Paciente(){
     }
 
     public String mostrarFechas(){
@@ -37,7 +42,7 @@ public class Paciente extends Persona{
 
     //Actualizar correo electronico.
     public void setCorreo(String correo){
-        if(correo.contains("@")){
+        if(correo.trim().contains("@")){
             //Si contiene el @ entonces se guarda
             this.correo = correo;
         }else{
@@ -51,7 +56,7 @@ public class Paciente extends Persona{
         try{
             Integer numero = Integer.parseInt(numeroDeTelefono.trim());
             //Si no devuelve error entonces procedera al IF
-            if(!this.numeroDeTelefono.equals(numeroDeTelefono.trim())){
+            if(!Objects.equals(this.numeroDeTelefono, numeroDeTelefono)){
                 //Si no es igual entonces se guarda
                 this.numeroDeTelefono = numeroDeTelefono;
             }else{
@@ -62,8 +67,10 @@ public class Paciente extends Persona{
         }
     }
 
-
-
+    //Getters
+    public String getCorreo() {
+        return correo;
+    }
 
     @Override
     public String mostrarDatos(){

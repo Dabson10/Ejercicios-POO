@@ -12,6 +12,9 @@ public abstract class Persona {
         this.nombres = nombres;
         this.apellidos = apellidos;
     }
+    Persona(){
+
+    }
     //Getters de la clase;
     public String getID(){ return ID; }
     public String getNombres(){
