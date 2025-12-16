@@ -113,13 +113,23 @@ public class PacienteServicios {
             //Para poder obtener y generar bien un ID de usario
 
             Paciente ultimoPaciente = pacientes.getUltimoPaciente();
-            String ultimoID = ultimoPaciente.getID();
+            if(ultimoPaciente == null){
+                String primerID = generadorID.generarID(1, "PACIENTES");
+                Paciente objetoGuardar = new Paciente(primerID, nombre, apellidos, telefono, correo);
+                pacientes.setPacientes(primerID, objetoGuardar);
+            }else{
+                String ultimoID = ultimoPaciente.getID();
 //            System.out.println("La longitud del ID es: " + limiteCadena);
-            int numeroID = Integer.parseInt(ultimoID.substring(4, 8));
+                int numeroID = Integer.parseInt(ultimoID.substring(4, 8));
 //            System.out.println("El numero es: " + numeroID + ", La cadena recortada es: " + ultimoID.substring(4, 8));
-            String ID = generadorID.generarID((numeroID + 1), "PACIENTES");
-            Paciente objetoGuardar = new Paciente(ID, nombre, apellidos, telefono, correo);
-            pacientes.setPacientes(ID, objetoGuardar);
+                String ID = generadorID.generarID((numeroID + 1), "PACIENTES");
+                Paciente objetoGuardar = new Paciente(ID, nombre, apellidos, telefono, correo);
+                pacientes.setPacientes(ID, objetoGuardar);
+                
+            }
+
+
+
         } catch (Exception e) {
             System.out.println("Error al guardar datos: " + e.getMessage());
         }

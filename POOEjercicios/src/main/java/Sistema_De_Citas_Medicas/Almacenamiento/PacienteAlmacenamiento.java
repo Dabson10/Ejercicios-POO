@@ -13,7 +13,7 @@ public class PacienteAlmacenamiento {
     //Metodos de la clase.
 
     public void setPacientes(String llave, Paciente valor){
-        if(!llave.isEmpty()){
+        if(!llave.isEmpty() || valor != null){
             //Si no esta vacio entonces se procede a guardar el valor.
             pacientes.put(llave, valor);
         }else{
@@ -45,15 +45,10 @@ public class PacienteAlmacenamiento {
     //=========== VALIDACIONES NO TAN USADAS, PERO NECESARIAS. ==========================
     //Valída que el Map tenga valores.
     public boolean validarAlmacenamiento(){
-        boolean validacion = !pacientes.isEmpty();
         //Si no está vacia entonces regresa un valor booleano
-        return validacion;
+        return !pacientes.isEmpty();
     }
 
-    //Para saber la longitud del mapa
-    public int longitudPacientes(){
-        return pacientes.size();
-    }
 
     //=============================== MOSTRAR DATOS DEL PACIENTE ===============================
     //Muestra todos los datos del HashMap.
@@ -66,12 +61,5 @@ public class PacienteAlmacenamiento {
     public void buscarPacienteID(String llave){
         Paciente paciente = pacientes.get(llave);
         System.out.println(paciente.mostrarDatos());
-    }
-
-
-
-    //Datos preguardados
-    public void datosGuardados(){
-
     }
 }
