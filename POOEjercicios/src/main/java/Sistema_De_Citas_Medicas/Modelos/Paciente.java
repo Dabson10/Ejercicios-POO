@@ -19,8 +19,6 @@ public class Paciente extends Persona{
         this.correo = correo;
     }
     //Constructor vacio
-    public Paciente(){
-    }
 
     public String mostrarFechas(){
         StringBuilder fechas = new StringBuilder();

@@ -20,6 +20,11 @@ public class DoctorAlmacenamiento {
         }
     }
 
+    //======== GET Doctores =========
+    public Doctor getDoctores(String ID){
+        return doctores.get(ID);
+    }
+
 
     //Obtener el ultimo valor del mapa
     public Doctor ultimoValor(){
@@ -33,7 +38,13 @@ public class DoctorAlmacenamiento {
     //================ MOSTRAR TODOS LOS DOCTORES ====================
     public void todosLosDoctores(){
         for(Map.Entry<String, Doctor> lista : doctores.entrySet()){
-            System.out.println(lista.getValue().mostrarDatos());
+            if(!lista.getValue().getID().contains("_DEL")){
+                //Si el ID tiene valores entonces lo muestra.
+                System.out.println(lista.getValue().mostrarDatos());
+            }
+            //Ya que si no tiene un ID es por que este se elimino, no quiero que ocurra un error de datos.
+            //Ya que habran sitas que necesitaran acceder a un ID y si el objeto es eliminado por completo,
+            //entonces existira un problema.
         }
     }
 

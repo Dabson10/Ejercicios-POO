@@ -1,9 +1,7 @@
 package Sistema_De_Citas_Medicas.Servicios;
 
 import Sistema_De_Citas_Medicas.Almacenamiento.DoctorAlmacenamiento;
-import Sistema_De_Citas_Medicas.Modelos.Cardiologo;
-import Sistema_De_Citas_Medicas.Modelos.Dentista;
-import Sistema_De_Citas_Medicas.Modelos.Doctor;
+import Sistema_De_Citas_Medicas.Modelos.*;
 import Sistema_De_Citas_Medicas.Utilidades.GeneradorID;
 
 import java.util.Scanner;
@@ -36,10 +34,8 @@ public class DoctorServicios {
         switch (opcionD) {
             case 1 -> menuMostrar(existenDoctores);
             case 2 -> menuAgregar();
-            case 3 -> {
-            }
-            case 4 -> {
-            }
+            case 3 -> editarDoctores(existenDoctores);
+            case 4 -> eliminarDoctores(existenDoctores);
             default -> System.out.println("Ingrese una opcion correcta.\n");
         }
     }
@@ -71,14 +67,16 @@ public class DoctorServicios {
     }
 
     //===================== AGREGAR DOCTORES ========================
-    public void menuAgregar(){
+    public void menuAgregar() {
         System.out.print("¿Cuantos Doctores quieres agregar? ");
         int cantidad = sc.nextInt();
-        for(int i =0; i < cantidad; i++){
+        for (int i = 0; i < cantidad; i++) {
             sc.nextLine();
             agregarDoctores();
         }
     }
+
+    //Funcion que juntara los datos generales de los doctores.
     public void agregarDoctores() {
         sc.nextLine();
         System.out.println("==== Ingrese los datos del Doctor. ====");
@@ -117,14 +115,15 @@ public class DoctorServicios {
             //Area Pediatría.
             case 3 -> {
                 ID = validarYGenerarID(cantidadDoctores, "PEDIATRIA");
+                datosPediatria(ID, nombres, apellidos, experiencia, horario);
             }
             //Area Medico General.
             case 4 -> {
                 ID = validarYGenerarID(cantidadDoctores, "MEDICO GENERAL");
+                datosMedicoGen(ID, nombres, apellidos, experiencia, horario);
             }
             default -> System.out.println("Seleccione una opción correcta.\n");
         }
-
     }
 
     //Función para validar y generar el ID del Doctor.
@@ -202,9 +201,156 @@ public class DoctorServicios {
         //Ahora se guarda el valor en el HashMap
         almacenDoctor.setDoctores(ID, new Dentista(ID, nombres, apellidos, experiencia, horario, especialidad));
     }
-//===================== EDITAR DOCTORES ========================
+
+    public void datosPediatria(String ID, String nombres, String apellidos, int experiencia, String horario) {
+        System.out.print("Atiende a niños entre: ");
+        String rangoEdad = sc.nextLine();
+        System.out.print("""
+                ¿Atiende urgencias?
+                1.Si.
+                2.No.
+                """);
+        int opcion = sc.nextInt();
+        boolean urgencias = false;
+        switch (opcion) {
+            case 1 -> urgencias = true;
+            case 2 -> urgencias = false;
+            default -> {
+                System.out.println("Ingrese una opción correcta.\n");
+                return;
+            }
+        }
+        almacenDoctor.setDoctores(ID, new Pediatra(ID, nombres, apellidos, experiencia, horario, rangoEdad, urgencias));
+    }
+
+    //Metodo para obtener y setear los datos de Medico General.
+    public void datosMedicoGen(String ID, String nombres, String apellidos, int experiencia, String horario) {
+        System.out.print("""
+                ¿Atiende urgencias?
+                1.Si.
+                2.No.
+                """);
+        int opcion = sc.nextInt();
+        boolean urgencias = false;
+        switch (opcion) {
+            case 1 -> urgencias = true;
+            case 2 -> urgencias = false;
+            default -> {
+                System.out.println("Seleccione una opción correcta.\n");
+                return;
+            }
+        }
+        almacenDoctor.setDoctores(ID, new MedicoGeneral(ID, nombres, apellidos, experiencia, horario, urgencias));
+    }
+
+    //===================== EDITAR DOCTORES ========================
+    public void editarDoctores(boolean existenDocs) {
+        if (existenDocs) {
+            //Si existen doctores entonces lo buscara.
+            System.out.print("Ingrese el ID del doctor: ");
+            String ID = sc.nextLine();
+            Doctor doctorEdit = almacenDoctor.getDoctores(ID);
+
+            if (doctorEdit != null) {
+                //Si el valor es diferente a null entonces si existe el doctor.
+                System.out.println("Los datos del doctor son: \n" +
+                        doctorEdit.mostrarDatos());
+                String doctorID = doctorEdit.getID();
+
+            } else {
+                System.out.println("No se encontro doctor con ese ID. Ingrese uno correcto\n");
+            }
+        } else {
+            System.out.println("No hay doctores para editar.\n");
+        }
+    }
+    public void editarDatos(){
+        System.out.println("""
+                ¿Que tipo de datos quieres editar?
+                1.Datos personales.(Nombres, Apellidos, Experiencia, Horario)
+                2.Específicos.(Especialidad, Urgencias, Rango edad, etc)
+                """);
+        int opcion = sc.nextInt();
+        switch(opcion){
+            case 1 ->editarDatosPersonales();
+            case 2 ->editarDatosEspecificos();
+            default -> System.out.println("Ingrese una opción valida.\n");
+        }
+    }
+    //Menu para editar datos personales
+    public void editarDatosPersonales(){
+        System.out.println("""
+                ¿Que deseas editar?
+                1.Nombre.
+                2.Apellidos.
+                3.Años de experiencia.
+                4.Horario.
+                """);
+        int opcion = sc.nextInt();
+        switch(opcion){
+            case 1 ->{
+                System.out.print("Nuevo nombre: ");
+                String nombre = sc.nextLine();
+            }
+            case 2 ->{
+                System.out.print("Nuevo apellido: ");
+                String apellidos = sc.nextLine();
+            }
+            case 3 ->{
+                System.out.print("Actualización de años de experiencia: ");
+                int experiencia = sc.nextInt();
+            }
+            case 4 ->{
+                System.out.print("Nuevo Horario: ");
+                String horario = sc.nextLine();
+            }
+            default -> System.out.println("Ingrese una opción valida.\n");
+        }
+
+    }
+    //Menu para editar datos Específicos.
+    public void editarDatosEspecificos(){
+    }
 //===================== ELIMINAR DOCTORES ========================
 
+    /**
+     * Esta funcion es para eliminar los datos del Doctor.
+     * Pero como tal no se eliminara solo se cambiara el ID ya si eliminamos el objeto y ubicacion del
+     * HashMap borraremos los datos en citas, por lo que es mejor cambiar el ID por uno totalmente diferente
+     * o con una referencia especifica.
+     * @param existenDocs : Este parametro funciona para validar que existen o no doctores en el HashMap.
+     */
+    public void eliminarDoctores(boolean existenDocs) {
+        if(existenDocs){
+            sc.nextLine();
+            //Si existen entonces procedemos con eliminar datos.
+            System.out.print("Ingrese el ID del doctor: ");
+            String ID = sc.nextLine();
+            Doctor doctorDatos = almacenDoctor.getDoctores(ID);
+            if(doctorDatos != null){
+                //Si es diferente a null osea que si es el objeto Doctor entonces seguimos con la eliminación.
+                System.out.println("Estas seguro de eliminar al doctor. \n" +
+                        doctorDatos.mostrarDatos() +
+                        "\nSi lo quieres eliminar presiona.\n" +
+                        "1.Eliminar.\n" +
+                        "2.Conservar.\n");
+                int opcion = sc.nextInt();
+                switch(opcion){
+                    case 1 ->{
+                        String IDCambiado = doctorDatos.getID() + "_DEL";
+                        doctorDatos.setID(IDCambiado);
+                        System.out.println("El Doctor se ha eliminado.\n");
+                    }
+                    case 2 -> System.out.println("El doctor se conservara.\n");
+                    default ->System.out.println("Ingrese una opcion correcta.\n");
+                }
+            }else{
+                System.out.println("No se encontro doctor con ese ID.\nIngrese uno existente.\n");
+            }
+        }else{
+            System.out.println("No hay datos registrados de doctores.");
+        }
+    }
 
 //===================== VALIDACIONES EXTRA =====================
 

@@ -2,12 +2,12 @@ package Sistema_De_Citas_Medicas.Modelos;
 //Clase hija de la clase Doctor.
 public class Pediatra extends Doctor{
     //Atributos
-    private int rangoEdad;
+    private String rangoEdad;
     private boolean atiendeUrgencias;
 
     //Metodos
     public Pediatra(String ID, String nombres, String apellidos, int experiencia,
-                    String horario, int rangoEdad, boolean atiendeUrgencias){
+                    String horario, String rangoEdad, boolean atiendeUrgencias){
         super(ID, nombres, apellidos, experiencia, horario, 1500.00f);
         this.rangoEdad = rangoEdad;
         this.atiendeUrgencias = atiendeUrgencias;

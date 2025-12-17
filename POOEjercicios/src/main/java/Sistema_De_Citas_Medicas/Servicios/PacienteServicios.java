@@ -215,7 +215,8 @@ public class PacienteServicios {
             );
             int accion = sc.nextInt();
             if(accion == 1){
-                pacientes.eliminarPaciente(id);
+                String editarID = paciente.getID() + "_DEL";
+                paciente.setID(editarID);
                 System.out.println("El paciente se elimino.\n");
 
             }

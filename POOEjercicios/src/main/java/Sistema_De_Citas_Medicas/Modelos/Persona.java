@@ -24,4 +24,14 @@ public abstract class Persona {
         return apellidos;
     }
     public abstract String mostrarDatos();
+
+    //Funcion para cambiar el ID ya sea del paciente o del doctor. por lo general solo se editara
+    public void setID(String ID){
+        if(!ID.isEmpty()){
+            //Si no esta vacío o tiene caracteres entonces si se cambiara el ID del doctor.
+            this.ID = ID;
+        }else{
+            System.out.println("No hay ID para cambiar.");
+        }
+    }
 }
