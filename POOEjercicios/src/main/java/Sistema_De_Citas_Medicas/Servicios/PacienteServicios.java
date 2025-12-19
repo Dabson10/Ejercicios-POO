@@ -152,6 +152,7 @@ public class PacienteServicios {
             System.out.println("No hay pacientes para poder editar.");
         }
     }
+    //Tengo que editar esto bien por que hay un error Claro
 
     //Funcion para editar un paciente.
     public void buscarPacientes(int opcionPaciente) {

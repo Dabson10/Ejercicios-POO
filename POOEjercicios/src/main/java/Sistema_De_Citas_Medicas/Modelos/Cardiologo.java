@@ -17,6 +17,21 @@ public class Cardiologo extends Doctor{
      * se trata la siguiente funcionalidad. En la cual se calculara en base a su especialidad y un
      * porcentaje de lo que gana.
      */
+    //Getters de la clase
+    public String getEspecialidad(){
+        return especialidad;
+    }
+    public void setEspecialidad(String especialidad){
+        if(!especialidad.isEmpty()){
+            //Si no esta vacio entonces se guarda el valor.
+            this.especialidad = especialidad;
+        }else{
+            System.out.println("Valor no reconocido. Ingrese una opción correcta.\n");
+        }
+    }
+    public boolean getAtiendeUrgencias(){
+        return atiendeUrgencias;
+    }
     @Override
     public String mostrarDatos(){
         String atiendeUrgencias = (this.atiendeUrgencias) ? "Si" : "No";

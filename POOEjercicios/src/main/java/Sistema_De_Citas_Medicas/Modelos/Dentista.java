@@ -9,7 +9,18 @@ public class Dentista extends Doctor{
         super(ID, nombres, apellidos, experiencia, horario, 1500.00f);
         this.especialidad = especialidad;
     }
-
+    //Getters y Setters de la clase
+    public String getEspecialidad(){
+        return especialidad;
+    }
+    public void setEspecialidad(String especialidad){
+        if(!especialidad.isEmpty()){
+            //Si no esta vacia entonces se guarda el dato
+            this.especialidad = especialidad;
+        }else{
+            System.out.println("Ingrese un valor valido.\n");
+        }
+    }
     //Metodos
     @Override
     public String mostrarDatos(){

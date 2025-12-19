@@ -26,12 +26,30 @@ public abstract class Doctor extends Persona{
     public String getHorario(){ return horario; }
     public float getTarifaPorConsulta(){ return tarifaPorConsulta; }
 
+    //Setters de la clase Doctor.
     //Metodo para asegurar que se guardaran tarifas superiores a cero.
     public void setTarifaPorConsulta(float tarifa){
         if(tarifa > 0){
             this.tarifaPorConsulta = tarifa;
         }else{
             System.out.println("Ingrese una tarifa valida.");
+        }
+    }
+
+    public void setExperiencia(int experiencia){
+        if(experiencia <= this.experiencia){
+            //Si no esta vacia la cadena
+            this.experiencia = experiencia;
+        }else{
+            System.out.println("Ingrese una opcion correcta.\n");
+        }
+    }
+    public void setHorario(String horario){
+        if(!horario.isEmpty()){
+            //Si el horario ingresado no esta vacio entonces lo guarda.
+            this.horario = horario;
+        }else{
+            System.out.println("Ingrese un valor valido.\n");
         }
     }
 

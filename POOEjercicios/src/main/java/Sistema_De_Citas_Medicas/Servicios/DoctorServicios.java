@@ -3,6 +3,7 @@ package Sistema_De_Citas_Medicas.Servicios;
 import Sistema_De_Citas_Medicas.Almacenamiento.DoctorAlmacenamiento;
 import Sistema_De_Citas_Medicas.Modelos.*;
 import Sistema_De_Citas_Medicas.Utilidades.GeneradorID;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Scanner;
 
@@ -55,11 +56,14 @@ public class DoctorServicios {
                     """);
             int opcionMost = sc.nextInt();
             switch (opcionMost) {
-                case 1 -> almacenDoctor.todosLosDoctores();
                 case 2 -> {
+                    sc.nextLine();
+                    System.out.println("Ingresa el ID del usuario: ");
+                    String ID = sc.nextLine();
+                    almacenDoctor.seleccionDoctor(ID);
                 }
-                case 3 -> {
-                }
+                case 1, 3, 4, 5, 6 -> almacenDoctor.mostrarDoctores(opcionMost);
+                default -> System.out.println("Ingrese una opcion correcta.\n");
             }
         } else {
             System.out.println("No hay doctores para mostrar.\n");
@@ -86,6 +90,7 @@ public class DoctorServicios {
         String apellidos = sc.nextLine();
         System.out.print("Años de experiencia: ");
         int experiencia = sc.nextInt();
+        sc.nextLine();
         System.out.print("Horario: ");
         String horario = sc.nextLine();
         System.out.print("""
@@ -246,6 +251,7 @@ public class DoctorServicios {
     //===================== EDITAR DOCTORES ========================
     public void editarDoctores(boolean existenDocs) {
         if (existenDocs) {
+            sc.nextLine();
             //Si existen doctores entonces lo buscara.
             System.out.print("Ingrese el ID del doctor: ");
             String ID = sc.nextLine();
@@ -256,7 +262,7 @@ public class DoctorServicios {
                 System.out.println("Los datos del doctor son: \n" +
                         doctorEdit.mostrarDatos());
                 String doctorID = doctorEdit.getID();
-
+                editarDatos(doctorEdit);
             } else {
                 System.out.println("No se encontro doctor con ese ID. Ingrese uno correcto\n");
             }
@@ -264,7 +270,7 @@ public class DoctorServicios {
             System.out.println("No hay doctores para editar.\n");
         }
     }
-    public void editarDatos(){
+    public void editarDatos(Doctor doctorEdit){
         System.out.println("""
                 ¿Que tipo de datos quieres editar?
                 1.Datos personales.(Nombres, Apellidos, Experiencia, Horario)
@@ -272,44 +278,156 @@ public class DoctorServicios {
                 """);
         int opcion = sc.nextInt();
         switch(opcion){
-            case 1 ->editarDatosPersonales();
-            case 2 ->editarDatosEspecificos();
+            case 1 ->editarDatosPersonales(doctorEdit);
+            case 2 ->editarDatosEspecificos(doctorEdit);
             default -> System.out.println("Ingrese una opción valida.\n");
         }
     }
     //Menu para editar datos personales
-    public void editarDatosPersonales(){
+    public void editarDatosPersonales(Doctor doctorEdit){
         System.out.println("""
                 ¿Que deseas editar?
-                1.Nombre.
-                2.Apellidos.
-                3.Años de experiencia.
-                4.Horario.
+                1.Años de experiencia.
+                2.Horario.
                 """);
         int opcion = sc.nextInt();
+        sc.nextLine();
         switch(opcion){
             case 1 ->{
-                System.out.print("Nuevo nombre: ");
-                String nombre = sc.nextLine();
-            }
-            case 2 ->{
-                System.out.print("Nuevo apellido: ");
-                String apellidos = sc.nextLine();
-            }
-            case 3 ->{
                 System.out.print("Actualización de años de experiencia: ");
                 int experiencia = sc.nextInt();
+                doctorEdit.setExperiencia(experiencia);
             }
-            case 4 ->{
+            case 2 ->{
                 System.out.print("Nuevo Horario: ");
                 String horario = sc.nextLine();
+                doctorEdit.setHorario(horario);
             }
             default -> System.out.println("Ingrese una opción valida.\n");
         }
 
     }
     //Menu para editar datos Específicos.
-    public void editarDatosEspecificos(){
+    public void editarDatosEspecificos(Doctor doctorEdit){
+        String IDCompleto = doctorEdit.getID();
+        String doctorID = doctorEdit.getID().substring(0,3);
+        //Para poder editar cada seccion de cada area debemos obtener las 3 pimeras letras y ahora si dirigir al doctor a su area respectiva.
+
+        switch(doctorID){
+            case "CAR" ->cardiologiaEdit(IDCompleto);
+            case "DEN" ->dentistaEdit(IDCompleto);
+            case "PED" ->pediatriaEdit(IDCompleto);
+            case "MED" ->medicoEditar(IDCompleto);
+            default ->System.out.println("Area no encontrada.\n");
+        }
+    }
+    //Funciones para editar datos especificos de cada areá.
+    public void cardiologiaEdit(String ID){
+        Cardiologo doc =(Cardiologo) almacenDoctor.getDoctores(ID);
+        String especialidadAntigua = doc.getEspecialidad();
+        System.out.print("""
+                ¿A que especialidad quieres actualizar?
+                1.Cardiología Clinica.
+                2.Cardiología Intervencionista.
+                3.Cardiología Electrofisiológica.
+               """);
+        int opcion = sc.nextInt();
+        String especialidadNueva = "";
+        switch(opcion){
+            case 1 -> especialidadNueva = "Cardiología Clinica";
+            case 2 -> especialidadNueva = "Cardiología Intervencionista";
+            case 3 -> especialidadNueva = "Cardiología Electrofisiológica";
+            default ->{
+                System.out.println("Ingrese una opción correcta.");
+                return;
+            }
+        }
+        if(!especialidadAntigua.equals(especialidadNueva)){
+            //Si la especialidad antigua y la nueva son diferentes entonces la guarda.
+            doc.setEspecialidad(especialidadNueva);
+            System.out.println("El cardiólogo ahora tiene la especialidad de: " + especialidadNueva);
+        }else{
+            System.out.println("Especialidad existente, no es necesario actualizar.");
+        }
+    }
+
+    public void dentistaEdit(String ID){
+        Dentista doctor = (Dentista) almacenDoctor.getDoctores(ID);
+        String especialidadAntigua = doctor.getEspecialidad();
+        System.out.print("""
+                ¿A que especialidad quieres actualizar?
+                1.Odontopediatría
+                2.Ortodoncia.
+                3.Maxilofacial.
+                """);
+        int opcionDent = sc.nextInt();
+        String especialidadNueva = "";
+        switch(opcionDent){
+            case 1 -> especialidadNueva = "Odontopediatría";
+            case 2 -> especialidadNueva = "Ortodoncia";
+            case 3 -> especialidadNueva = "Maxilofacial";
+            default -> {
+                System.out.println("Ingrese una opción correcta.\n");
+                return;
+            }
+        }
+        //Validamos que la especialidad seleccionada no sea la misma
+        if(!especialidadAntigua.equals(especialidadNueva)){
+            //Si es diferente entonces se guarda.
+            doctor.setEspecialidad(especialidadNueva);
+            System.out.println("El dentista ahora tiene la especialidad de: " + especialidadNueva);
+        }else{
+            System.out.println("Especialidad ya existente.\nNo se guardo, se converso la antigua.");
+        }
+    }
+    //Pediatria
+    public void pediatriaEdit(String ID){
+        Pediatra doctor = (Pediatra) almacenDoctor.getDoctores(ID);
+        sc.nextLine();
+        String rangoAntiguo = doctor.getRangoEdad();
+        System.out.print("""
+                Para poder guardar un nuevo rango de edad debes ingresar\s
+                la edad de inicio y la edad final ejemplo:
+                edadInicial - edadLimite
+               \s""");
+        System.out.print("Ingrese el nuevo rango de edad: ");
+        String rangoNuevo = sc.nextLine();
+        //Ahora se compara de que no sea el mismo valor ingresado.
+        if(!rangoAntiguo.equals(rangoNuevo)){
+            //Si no es el mismo entonces guardamos
+            doctor.setRangoEdad(rangoNuevo);
+            System.out.println("El pediatra ahora atiende a niños con edad de: " + rangoNuevo);
+        }else{
+            System.out.println("Ya cuenta con ese rango de edad.");
+        }
+    }
+    //Medico general.
+    public void medicoEditar(String ID){
+        MedicoGeneral doctor = (MedicoGeneral) almacenDoctor.getDoctores(ID);
+        boolean estadoUrgencias = doctor.getAtiendeUrgencias();
+        System.out.print("""
+                ¿Quieres cambiar el estado de atender urgencias.?
+                1.Si.
+                2.No.
+                """);
+        int opcion = sc.nextInt();
+        switch(opcion){
+            case 1 ->{
+                //Cambiamos el valor de la urgencia
+                boolean estadoCambiado = !estadoUrgencias;
+                doctor.setAtiendeUrgencias(estadoCambiado);
+                String queAtiende = (estadoCambiado) ? "Si" : "No";
+                System.out.println("El medico " + queAtiende + " atiende urgencias.\n");
+            }
+            case 2 -> {
+                System.out.println("Se conservara el estado actual.\n");
+                return;
+            }
+            default ->{
+                System.out.println("Seleccione una opción correcta.\n");
+                return;
+            }
+        }
     }
 //===================== ELIMINAR DOCTORES ========================
 

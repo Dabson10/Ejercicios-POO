@@ -1,8 +1,10 @@
 package Sistema_De_Citas_Medicas;
 
+import Sistema_De_Citas_Medicas.Almacenamiento.CitaAlmacenamiento;
 import Sistema_De_Citas_Medicas.Almacenamiento.DoctorAlmacenamiento;
 import Sistema_De_Citas_Medicas.Almacenamiento.PacienteAlmacenamiento;
 import Sistema_De_Citas_Medicas.Modelos.*;
+import Sistema_De_Citas_Medicas.Servicios.CitaServicios;
 import Sistema_De_Citas_Medicas.Servicios.DoctorServicios;
 import Sistema_De_Citas_Medicas.Servicios.PacienteServicios;
 
@@ -12,9 +14,11 @@ public class Principal {
     //Objetos para poder guardar datos desde el incio
     static PacienteAlmacenamiento almacenPacientes = new PacienteAlmacenamiento();
     static DoctorAlmacenamiento almacenDoctores = new DoctorAlmacenamiento();
+    static CitaAlmacenamiento almacenCitas = new CitaAlmacenamiento();
     //Acceso a las diferentes clases de servicios.
     static PacienteServicios pacientesServicios = new PacienteServicios(almacenPacientes);
     static DoctorServicios doctoresServicios = new DoctorServicios(almacenDoctores);
+    static CitaServicios citasServicios = new CitaServicios(almacenCitas);
 
 
 
@@ -39,7 +43,7 @@ public class Principal {
                 opcion = sc.nextInt();
                 sc.nextLine();
                 switch(opcion){
-                    case 1 -> {}
+                    case 1 -> citasServicios.menuCitas();
                     case 2 -> doctoresServicios.menuDoctores();
                     case 3 -> pacientesServicios.opcionesPacientes();
                     case 4 -> {
@@ -76,7 +80,7 @@ public class Principal {
         almacenDoctores.setDoctores("DEN_0007", new Dentista("DEN_0007", "Valeria", "Soto Vargas", 6, "7:00-13:00", "Ortodoncia"));
 
 
-        almacenDoctores.setDoctores("CAR_008", new Cardiologo("CAR_008", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Intervencionista", true));
-        almacenDoctores.setDoctores("CAR_009", new Cardiologo("CAR_009", "Elena", "Montes Rivas", 9, "9:00-17:00", "Electrofisiología", true));
+        almacenDoctores.setDoctores("CAR_0008", new Cardiologo("CAR_0008", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Intervencionista", true));
+        almacenDoctores.setDoctores("CAR_0009", new Cardiologo("CAR_0009", "Elena", "Montes Rivas", 9, "9:00-17:00", "Electrofisiología", true));
     }
 }

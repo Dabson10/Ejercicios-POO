@@ -12,7 +12,19 @@ public class Pediatra extends Doctor{
         this.rangoEdad = rangoEdad;
         this.atiendeUrgencias = atiendeUrgencias;
     }
+    //Metodos Getters y Setter de la clase.
 
+    public String getRangoEdad() {
+        return rangoEdad;
+    }
+    public void setRangoEdad(String rangoEdad){
+        if(!rangoEdad.isEmpty()){
+            //Si no esta vacío entonces se guardan los datos.
+            this.rangoEdad = rangoEdad;
+        }else{
+            System.out.println("Ingrese un rango de edad.\n");
+        }
+    }
 
     //Metodo que muestra los datos del doctor.
     @Override
@@ -20,6 +32,7 @@ public class Pediatra extends Doctor{
         String urgencias = (atiendeUrgencias) ? "Si" : "No";
         return "\nDoctor: " + getApellidos().concat(" ").concat(getNombres()) +
                 "\nAtiende a niños con edad entre: " + rangoEdad +
+                "\nEspecialidad: "+
                 "\nEl doctor "  + urgencias + " atiende urgencias" +
                 "\nExperiencia: " + getExperiencia() +
                 "\nTarifa por consulta: " + getTarifaPorConsulta() +
