@@ -26,6 +26,13 @@ public class Pediatra extends Doctor{
         }
     }
 
+    public boolean getAtiendeUrgencias(){
+        return atiendeUrgencias;
+    }
+    public void setAtiendeUrgencias(boolean atiendeUrgencias){
+        this.atiendeUrgencias = atiendeUrgencias;
+    }
+
     //Metodo que muestra los datos del doctor.
     @Override
     public String mostrarDatos(){

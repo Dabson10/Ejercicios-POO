@@ -158,9 +158,9 @@ public class DoctorServicios {
         int especialidad = sc.nextInt();
         String areaCard = "";
         switch (especialidad) {
-            case 1 -> areaCard = "Clinica";
-            case 2 -> areaCard = "Intervencionista";
-            case 3 -> areaCard = "Electrofisiológica";
+            case 1 -> areaCard = "Cardiología Clinica";
+            case 2 -> areaCard = "Cardiología Intervencionista";
+            case 3 -> areaCard = "Cardiología Electrofisiológica";
             default -> {
                 System.out.println("Seleccione una especialidad correcta.\n");
                 return;

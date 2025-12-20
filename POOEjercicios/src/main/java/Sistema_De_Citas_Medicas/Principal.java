@@ -18,7 +18,7 @@ public class Principal {
     //Acceso a las diferentes clases de servicios.
     static PacienteServicios pacientesServicios = new PacienteServicios(almacenPacientes);
     static DoctorServicios doctoresServicios = new DoctorServicios(almacenDoctores);
-    static CitaServicios citasServicios = new CitaServicios(almacenCitas);
+    static CitaServicios citasServicios = new CitaServicios(almacenCitas, almacenDoctores);
 
 
 
@@ -73,14 +73,49 @@ public class Principal {
         almacenDoctores.setDoctores("MED_0002", new MedicoGeneral("MED_0002", "Roberto", "Gómez Sánchez", 12, "16:00-22:00", false));
         almacenDoctores.setDoctores("MED_0003", new MedicoGeneral("MED_0003", "Carolina", "Díaz Ruiz", 3, "10:00-18:00", true));
 
-        almacenDoctores.setDoctores("PED_0004", new Pediatra("PED_0004", "Miguel", "Torres Castro", 8, "9:00-15:00", "0-14", true));
-        almacenDoctores.setDoctores("PED_0005", new Pediatra("PED_0005", "Sofía", "Herrera Mora", 15, "11:00-19:00", "0-18", false));
+        almacenDoctores.setDoctores("PED_0004", new Pediatra("PED_0004", "Miguel", "Torres Castro", 8, "9:00-15:00", "0 a 14", true));
+        almacenDoctores.setDoctores("PED_0005", new Pediatra("PED_0005", "Sofía", "Herrera Mora", 15, "11:00-19:00", "0 a 18", false));
 
-        almacenDoctores.setDoctores("DEN_0006", new Dentista("DEN_0006", "Juan", "Morales Luna", 10, "14:00-20:00", "Endodoncia"));
+        almacenDoctores.setDoctores("DEN_0006", new Dentista("DEN_0006", "Juan", "Morales Luna", 10, "14:00-20:00", "Odontopediatría"));
         almacenDoctores.setDoctores("DEN_0007", new Dentista("DEN_0007", "Valeria", "Soto Vargas", 6, "7:00-13:00", "Ortodoncia"));
+        almacenDoctores.setDoctores("DEN_0008", new Dentista("DEN_0008", "Juan", "Morales Luna", 10, "14:00-20:00", "Maxilofacial"));
 
+        almacenDoctores.setDoctores("CAR_0009", new Cardiologo("CAR_0009", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Cardiología Intervencionista", true));
+        almacenDoctores.setDoctores("CAR_0010", new Cardiologo("CAR_0010", "Elena", "Montes Rivas", 9, "9:00-17:00", "Cardiología Clinica", false));
+        almacenDoctores.setDoctores("CAR_0011", new Cardiologo("CAR_0011", "Elena", "Montes Rivas", 9, "9:00-17:00", "Cardiología Electrofisiología", true));
 
-        almacenDoctores.setDoctores("CAR_0008", new Cardiologo("CAR_0008", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Intervencionista", true));
-        almacenDoctores.setDoctores("CAR_0009", new Cardiologo("CAR_0009", "Elena", "Montes Rivas", 9, "9:00-17:00", "Electrofisiología", true));
+        almacenDoctores.setDoctores("DEN_0012", new Dentista("DEN_0012", "Juan", "Morales Luna", 10, "14:00-20:00", "Odontopediatría"));
+        almacenDoctores.setDoctores("DEN_0013", new Dentista("DEN_0013", "Valeria", "Soto Vargas", 6, "7:00-13:00", "Ortodoncia"));
+        almacenDoctores.setDoctores("DEN_0014", new Dentista("DEN_0014", "Laura", "Méndez Ruiz", 12, "08:00-14:00", "Maxilofacial"));
+        almacenDoctores.setDoctores("DEN_0015", new Dentista("DEN_0015", "Juan", "Morales Luna", 10, "14:00-20:00", "Ortodoncia"));
+        almacenDoctores.setDoctores("DEN_0016", new Dentista("DEN_0016", "Carlos", "Pérez Solís", 5, "15:00-21:00", "Odontopediatría"));
+        almacenDoctores.setDoctores("DEN_0017", new Dentista("DEN_0017", "Valeria", "Soto Vargas", 6, "7:00-13:00", "Maxilofacial"));
+        almacenDoctores.setDoctores("DEN_0018", new Dentista("DEN_0018", "Laura", "Méndez Ruiz", 12, "08:00-14:00", "Odontopediatría"));
+
+        almacenDoctores.setDoctores("CAR_0019", new Cardiologo("CAR_0019", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Cardiología Intervencionista", true));
+        almacenDoctores.setDoctores("CAR_0020", new Cardiologo("CAR_0020", "Elena", "Montes Rivas", 9, "9:00-17:00", "Cardiología Clinica", true));
+        almacenDoctores.setDoctores("CAR_0021", new Cardiologo("CAR_0021", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Cardiología Electrofisiología", true));
+        almacenDoctores.setDoctores("CAR_0022", new Cardiologo("CAR_0022", "Elena", "Montes Rivas", 9, "9:00-17:00", "Cardiología Intervencionista", false));
+        almacenDoctores.setDoctores("CAR_0023", new Cardiologo("CAR_0023", "Sofia", "Lara Becerra", 15, "10:00-16:00", "Cardiología Clinica", true));
+        almacenDoctores.setDoctores("CAR_0024", new Cardiologo("CAR_0024", "Sofia", "Lara Becerra", 15, "10:00-16:00", "Cardiología Electrofisiología", false));
+        almacenDoctores.setDoctores("CAR_0025", new Cardiologo("CAR_0025", "Ricardo", "Peña Cruz", 20, "12:00-18:00", "Cardiología Clinica", false));
+        almacenDoctores.setDoctores("CAR_0026", new Cardiologo("CAR_0026", "Elena", "Montes Rivas", 9, "9:00-17:00", "Cardiología Electrofisiología", false));
+
+        almacenDoctores.setDoctores("PED_0027", new Pediatra("PED_0027", "Miguel", "Torres Castro", 8, "9:00-15:00", "0 a 14", false));
+        almacenDoctores.setDoctores("PED_0028", new Pediatra("PED_0028", "Sofía", "Herrera Mora", 15, "11:00-19:00", "0 a 18", true));
+        almacenDoctores.setDoctores("PED_0029", new Pediatra("PED_0029", "Alejandro", "Sanz Ríos", 12, "8:00-14:00", "5 a 17", true));
+        almacenDoctores.setDoctores("PED_0030", new Pediatra("PED_0030", "Lucía", "Fernández Oro", 20, "13:00-20:00", "0 a 14", true));
+        almacenDoctores.setDoctores("PED_0031", new Pediatra("PED_0031", "Miguel", "Torres Castro", 8, "9:00-15:00", "0 a 18", false));
+        almacenDoctores.setDoctores("PED_0032", new Pediatra("PED_0032", "Sofía", "Herrera Mora", 15, "11:00-19:00", "5 a 17", false));
+        almacenDoctores.setDoctores("PED_0033", new Pediatra("PED_0033", "Alejandro", "Sanz Ríos", 12, "8:00-14:00", "0 a 14", false));
+        almacenDoctores.setDoctores("PED_0034", new Pediatra("PED_0034", "Lucía", "Fernández Oro", 20, "13:00-20:00", "0 a 18", true));
+        almacenDoctores.setDoctores("PED_0035", new Pediatra("PED_0035", "Miguel", "Torres Castro", 8, "9:00-15:00", "5 a 17", true));
+        almacenDoctores.setDoctores("PED_0036", new Pediatra("PED_0036", "Sofía", "Herrera Mora", 15, "11:00-19:00", "0 a 14", true));
+        almacenDoctores.setDoctores("PED_0037", new Pediatra("PED_0037", "Alejandro", "Sanz Ríos", 12, "8:00-14:00", "0 a 18", false));
+        almacenDoctores.setDoctores("PED_0038", new Pediatra("PED_0038", "Lucía", "Fernández Oro", 20, "13:00-20:00", "5 a 17", false));
+
+        almacenDoctores.setDoctores("MED_0039", new MedicoGeneral("MED_0039", "Ana", "López Pérez", 5, "8:00-14:00", false));
+        almacenDoctores.setDoctores("MED_0040", new MedicoGeneral("MED_0040", "Roberto", "Gómez Sánchez", 12, "16:00-22:00", true));
+        almacenDoctores.setDoctores("MED_0041", new MedicoGeneral("MED_0041", "Carolina", "Díaz Ruiz", 3, "10:00-18:00", false));
     }
 }
