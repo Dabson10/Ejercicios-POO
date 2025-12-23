@@ -60,6 +60,10 @@ public class PacienteAlmacenamiento {
     //Muestra solo el usuario con cierta llave.
     public void buscarPacienteID(String llave){
         Paciente paciente = pacientes.get(llave);
-        System.out.println(paciente.mostrarDatos());
+        if(paciente != null){
+            System.out.println(paciente.mostrarDatos());
+        }else{
+            System.out.println("Ingrese un paciente existente.\n");
+        }
     }
 }

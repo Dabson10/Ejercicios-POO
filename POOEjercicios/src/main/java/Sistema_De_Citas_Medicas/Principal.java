@@ -18,7 +18,7 @@ public class Principal {
     //Acceso a las diferentes clases de servicios.
     static PacienteServicios pacientesServicios = new PacienteServicios(almacenPacientes);
     static DoctorServicios doctoresServicios = new DoctorServicios(almacenDoctores);
-    static CitaServicios citasServicios = new CitaServicios(almacenCitas, almacenDoctores);
+    static CitaServicios citasServicios = new CitaServicios(almacenCitas, almacenDoctores, almacenPacientes);
 
 
 

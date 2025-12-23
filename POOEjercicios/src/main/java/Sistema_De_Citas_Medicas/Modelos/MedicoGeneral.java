@@ -15,6 +15,18 @@ public class MedicoGeneral extends Doctor {
     public void setAtiendeUrgencias(boolean atiendeUrgencias){
         this.atiendeUrgencias = atiendeUrgencias;
     }
+
+    /**
+     * La siguiente función calculará cuanto se cobrara en la cita, con base a un parametro, en este caso si es true or false
+     * @param urgencia : Si la cita es con urgencia se cobrara un 5% en base a la tarifa del doctor.
+     * @return : Regresara cuanto se le cobrara al paciente.
+     */
+    @Override
+    public float costeCitaExtra(boolean urgencia, String especialidad){
+        //Sí es true el valor entonces agregamos un 10% con base a la tarifa del base del Medíco General.
+        return (urgencia) ? (getTarifaPorConsulta() * .05f) : 0f;
+    }
+
     @Override
     public String mostrarDatos() {
         String urgencias = (atiendeUrgencias) ? "Si" : "No";

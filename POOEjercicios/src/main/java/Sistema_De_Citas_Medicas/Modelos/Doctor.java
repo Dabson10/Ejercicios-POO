@@ -53,7 +53,13 @@ public abstract class Doctor extends Persona{
         }
     }
 
-    //Funcion abstracta para mostrar datos del Doctor
-    public abstract String mostrarDatos();
+    //La siguiente método funcionará para calcular cuanto se cobrara por la cita medica, en este caso
+    //Se solicitaran dos parametros, uno booleano para saber si es urgente o no, la otra para saber la
+    //especialidad de doctor, lo cual aumentara el precio de la cita.
+    // === Recordar que en todos los casos puede usarse o no un parametro, por lo que solo se agregar,
+    //para cumplir con la abstracción.
+    public abstract float costeCitaExtra(boolean urgente, String especialidad);
 
+    //Función abstracta para mostrar datos del Doctor
+    public abstract String mostrarDatos();
 }

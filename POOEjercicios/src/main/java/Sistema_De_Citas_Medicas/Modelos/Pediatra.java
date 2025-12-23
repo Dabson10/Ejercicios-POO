@@ -33,13 +33,21 @@ public class Pediatra extends Doctor{
         this.atiendeUrgencias = atiendeUrgencias;
     }
 
+    /**
+     * La siguiente función calculará cuanto se cobrara en la cita, con base a un parametro, en este caso si es true or false
+     * @param urgencia : Si la cita es con urgencia se cobrara un 5% en base a la tarifa del doctor.
+     * @return : Regresara cuanto se le cobrara al paciente.
+     */
+    @Override
+    public float costeCitaExtra(boolean urgencia, String especialidad){
+        return (urgencia)? (getTarifaPorConsulta() * 0.1f) : 0f;
+    }
     //Metodo que muestra los datos del doctor.
     @Override
     public String mostrarDatos(){
         String urgencias = (atiendeUrgencias) ? "Si" : "No";
         return "\nDoctor: " + getApellidos().concat(" ").concat(getNombres()) +
                 "\nAtiende a niños con edad entre: " + rangoEdad +
-                "\nEspecialidad: "+
                 "\nEl doctor "  + urgencias + " atiende urgencias" +
                 "\nExperiencia: " + getExperiencia() +
                 "\nTarifa por consulta: " + getTarifaPorConsulta() +
