@@ -24,7 +24,7 @@ public class MedicoGeneral extends Doctor {
     @Override
     public float costeCitaExtra(boolean urgencia, String especialidad){
         //Sí es true el valor entonces agregamos un 10% con base a la tarifa del base del Medíco General.
-        return (urgencia) ? (getTarifaPorConsulta() * .05f) : 0f;
+        return ((urgencia) ? (getTarifaPorConsulta() * .05f) : 0f) + getTarifaPorConsulta();
     }
 
     @Override

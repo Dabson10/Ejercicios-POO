@@ -80,3 +80,12 @@
     Identificación de pacientes frecuentes
 
    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   La forma de utilizar este gestor de citas medicas e muy simple
+   al inicio aparecera la seleccion de personajes ya sea
+   1.Citas
+   2.Doctores
+   3.Pacientes.
+   cada uno tiene un submenu con acciones importantes, como mostrar, agregar, editar y eliminar
+   por default hay valores establecidos por lo que se podran revisar datos sin necesidad
+   de crear desde cero.

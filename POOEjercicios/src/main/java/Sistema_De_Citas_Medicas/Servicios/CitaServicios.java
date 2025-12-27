@@ -8,13 +8,11 @@ import Sistema_De_Citas_Medicas.Utilidades.GeneradorID;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.Scanner;
 
 public class CitaServicios {
     //Objeto para almacenar conectar con la clase CitaAlmacenamiento
     private CitaAlmacenamiento almacenCita;
-    //    private DoctorAlmacenamiento almacenDoctor;
     Scanner sc = new Scanner(System.in);
     //Objeto para comunicarse con DoctorAlmacenamiento
     private DoctorAlmacenamiento almacenDoctor;
@@ -31,6 +29,7 @@ public class CitaServicios {
 
     //============ MENU DE CITAS MEDICAS =============
     public void menuCitas() {
+        boolean existenCitas = almacenCita.existenCitas();
         System.out.println("""
                 |==== CITAS MEDICAS ====|
                 ¿Qué deseas realizar?
@@ -40,10 +39,9 @@ public class CitaServicios {
                 """);
         int opcion = sc.nextInt();
         switch (opcion) {
-            case 1 ->  menuMostrarCitas();
+            case 1 -> menuMostrarCitas(existenCitas);
             case 2 -> crearCitas();
-            case 3 -> {
-            }
+            case 3 -> menuEstados(existenCitas);
             default -> {
                 System.out.println("Ingrese una opción correcta.");
                 return;
@@ -52,26 +50,38 @@ public class CitaServicios {
     }
 
     // ================ Mostrar Citas =============
-    public void menuMostrarCitas(){
-        System.out.println("""
-                ¿Comó deseas ver las citas medicas?
-                1.Mostrar todas.
-                2.Buscar por ID.
-                """);
-        int opcion = sc.nextInt();
-        switch(opcion){
-            case 1 ->almacenCita.mostrarTodas();
-            case 2 ->mostrarPorID();
-            default ->{
-                System.out.println("Ingrese una opción correcta.\n");
-                return;
+    public void menuMostrarCitas(boolean existen) {
+        if (existen) {
+            System.out.println("""
+                    ¿Comó deseas ver las citas medicas?
+                    1.Mostrar todas.
+                    2.Buscar por ID.
+                    """);
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1 -> almacenCita.mostrarTodas();
+                case 2 -> mostrarPorID();
+                default -> {
+                    System.out.println("Ingrese una opción correcta.\n");
+                    return;
+                }
             }
+        } else {
+            System.out.println("No hay citas medicas guardadas.");
         }
     }
 
-    public void mostrarPorID(){
+    public void mostrarPorID() {
+        sc.nextLine();
         System.out.print("Ingrese el ID de la cita: ");
-        String cita = sc.nextLine();
+        String ID = sc.nextLine();
+        Cita cita = almacenCita.getCita(ID);
+        //Si es diferente entonces muestra los datos de la cita médica.
+        if (cita != null) {
+            System.out.println(cita.mostrarCita());
+        } else {
+            System.out.println("Ingrese una cita médica existente.");
+        }
     }
 
 
@@ -120,6 +130,7 @@ public class CitaServicios {
         motivo = sc.nextLine();
         //Generación del ID de la cita.
         ID = citaID();
+        System.out.println("El ID de la cita es: " + ID);
         //Esta función contendrá todas las áreas médicas.
         seleccionarArea(ID, paciente, fecha, motivo);
 
@@ -151,7 +162,7 @@ public class CitaServicios {
         }
     }
 
-    //Funcion para buscar a doctores mediante lo que si y lo que no hace.
+    //Función para buscar a doctores mediante lo que si y lo que no hace.
     public void buscarCardiologo(String citaID, Paciente paciente, String fecha, String motivo) {
         //Variables que se usaran.
         boolean urgencia;
@@ -189,22 +200,29 @@ public class CitaServicios {
         almacenDoctor.getDoctores(ID);
         //======= Obtención del ID del doctor
         //Después que se mostró a los doctores, se seleccionara uno, esto si o si se repetirá por qué se obtendrá cada objeto de cada clase
-        System.out.println("Ingrese el ID del doctor: ");
-        String doctorID = sc.nextLine();
-        boolean existe = validarArea("CAR", doctorID);
-        if(existe){
-            Cardiologo cardiologo = (Cardiologo) almacenDoctor.getDoctores(doctorID);
+        boolean existe = validarArea("CAR", ID);
+        if (existe) {
+            Cardiologo cardiologo = (Cardiologo) almacenDoctor.getDoctores(ID);
             System.out.println(cardiologo.mostrarDatos());
             //===== Se guardan los datos de la cita medica.
             float costoCita = cardiologo.costeCitaExtra(urgencia, buscaCard);
             almacenCita.setCitas(citaID, new Cita(citaID, paciente, cardiologo, fecha, costoCita, motivo));
-        }else{
-            System.out.print("Ingrese un ID de cardiologó.\n");
+            //Ahora se realiza una validación para saber si se creó la cita medíca.
+            boolean citaCreada = almacenCita.encontrarCita(citaID);
+            if (citaCreada) {
+                //Si se encontró la cita entonces al paciente le agregamos la fecha en la que asistirá.
+                paciente.setHistorialConsultas(fecha, motivo);
+                System.out.println("Cita creada correctamente.");
+            }
+
+
+        } else {
+            System.out.print("Ingrese un ID de cardiólogo.\n");
         }
 
     }
 
-    //Busca a todos los dentiastas.
+    //Busca a todos los dentistas.
     public void buscarDentista(String citaID, Paciente paciente, String fecha, String motivo) {
         String especialidad;
         System.out.print("""
@@ -230,11 +248,17 @@ public class CitaServicios {
         System.out.print("Ingrese el ID del dentista: ");
         String ID = sc.nextLine();
         boolean existe = validarArea("DEN", ID);
-        if(existe){
+        if (existe) {
             Dentista dentista = (Dentista) almacenDoctor.getDoctores(ID);
-        float costoCita = dentista.costeCitaExtra(false, especialidad);
-        almacenCita.setCitas(citaID,new Cita(citaID, paciente, dentista, fecha, costoCita, motivo) );
-        }else{
+            float costoCita = dentista.costeCitaExtra(false, especialidad);
+            almacenCita.setCitas(citaID, new Cita(citaID, paciente, dentista, fecha, costoCita, motivo));
+            boolean citaCreada = almacenCita.encontrarCita(citaID);
+            if (citaCreada) {
+                //Si se encontró la cita entonces al paciente le agregamos la fecha en la que asistirá.
+                paciente.setHistorialConsultas(fecha, motivo);
+                System.out.println("Cita creada correctamente.");
+            }
+        } else {
             System.out.print("Ingreso un ID de Dentista.");
         }
     }
@@ -258,13 +282,18 @@ public class CitaServicios {
         String ID = sc.nextLine();
         boolean existe = validarArea("PED", ID);
 
-        if(existe){
+        if (existe) {
             Pediatra pediatra = (Pediatra) almacenDoctor.getDoctores(ID);
-            //En la siguiente line solo se ocupa la urgencia para saber cuanto se cobrara, ya que pediatria no tiene
+            //En la siguiente line solo se ocupa la urgencia para saber cuanto se cobrara, ya que pediatría no tiene
             float costoCita = pediatra.costeCitaExtra(urgencia, "");
             almacenCita.setCitas(citaID, new Cita(citaID, paciente, pediatra, fecha, costoCita, motivo));
-
-        }else{
+            boolean citaCreada = almacenCita.encontrarCita(citaID);
+            if (citaCreada) {
+                //Si se encontró la cita entonces al paciente le agregamos la fecha en la que asistirá.
+                paciente.setHistorialConsultas(fecha, motivo);
+                System.out.println("Cita creada correctamente.");
+            }
+        } else {
             System.out.print("Ingrese un ID de Pediatría.\n");
         }
     }
@@ -284,45 +313,141 @@ public class CitaServicios {
         System.out.print("Ingrese el ID del medico general: ");
         String ID = sc.nextLine();
         boolean existe = validarArea("MED", ID);
-        if(existe){
+        if (existe) {
             MedicoGeneral medico = (MedicoGeneral) almacenDoctor.getDoctores(ID);
             float costoCita = medico.costeCitaExtra(urgencias, "");
             almacenCita.setCitas(citaID, new Cita(citaID, paciente, medico, fecha, costoCita, motivo));
-        }else{
+            boolean citaCreada = almacenCita.encontrarCita(citaID);
+            if (citaCreada) {
+                //Si se encontró la cita entonces al paciente le agregamos la fecha en la que asistirá.
+                paciente.setHistorialConsultas(fecha, motivo);
+                System.out.println("Cita creada correctamente.");
+            }
+        } else {
             System.out.print("Ingrese un ID de un medico general.\n");
         }
 
     }
 
+    //Esta función sirve para obtener datos fundamentales de la cita y asi poder generarlo,
+    //está declarada en la parte de crear cita, se crea para no tener tanto código en la
+    //función se crea.
     public String citaID() {
         Cita cita = almacenCita.ultimaCita();
         String IDCita = "";
         if (cita != null) {
-            //SI es diferente a null significa que si se obtuvo el objeto de cita, por lo que
+            //Si es diferente a null significa que si se obtuvo el objeto de cita, por lo que
             //existe un objeto y podemos tomar el ID de este.
             int numero = Integer.parseInt(cita.getCitaID().substring(4, 8));
-            IDCita = generadorID.generarID(numero, "CITA");
+            IDCita = generadorID.generarID(numero + 1, "CITA");
         } else {
             IDCita = generadorID.generarID(1, "CITA");
+
         }
         return IDCita;
     }
 
+    //=========== CAMBIAR ESTADO DE CITAS MEDICAS ===========
+    public void menuEstados(boolean existen) {
+        if (existen) {
+            sc.nextLine();
+            System.out.print("Ingrese el ID de la cita medica: ");
+            String ID = sc.nextLine();
+            Cita citaEdit = almacenCita.getCita(ID);
+            if (citaEdit != null) {
+                System.out.print("""
+                        ¿Que acción deseas hacer con las citas.?
+                        1.Completar cita.
+                        2.Cancelar cita.
+                        """);
+                int opcion = sc.nextInt();
 
-    //================= VALIDACIÓN DE DENTISTA ==============
+                switch (opcion) {
+                    case 1 -> completarCita(citaEdit);
+                    case 2 -> cancelarCita(citaEdit);
+                    default -> {
+                        System.out.println("Ingrese una opción correcta.\n");
+                        return;
+                    }
+                }
+            } else {
+                System.out.println("No se encontró la cita medica. Ingrese una existente.");
+            }
+        } else {
+            System.out.println("No hay citas guardadas.\n");
+        }
+    }
+
+    public void completarCita(Cita cita) {
+        System.out.print("""
+                ¿Durante la cita medica ocurrieron gastos extras?
+                1.Si.
+                2.No.
+                """);
+        int opcion = sc.nextInt();
+        boolean extras = (opcion == 1);
+        if (extras) {
+            sc.nextLine();
+            //Si es true entonces si hubo algún gasto extra.
+            System.out.print("Cual es la razón del monto extra: ");
+            String razonMontoExtra = sc.nextLine();
+            System.out.print("Ingrese el monto extra: ");
+            float montoExtra = sc.nextInt();
+            //Guardamos el monto extra y cambiamos el estado de la cita medíca.
+
+            if (cita.completarCita()) {
+                cita.actualizarMontosExtras(razonMontoExtra, montoExtra);
+                System.out.println("La cita medica se completo.");
+            } else {
+                System.out.println("No se pudo completar la cita medica.");
+            }
+        } else {
+            //No hubo ningún gasto extra.
+            if (cita.completarCita()) {
+                cita.actualizarMontosExtras("nada", 0);
+                System.out.println("Se completo la cita medica.");
+            }
+        }
+    }
+
+    public void cancelarCita(Cita cita) {
+        System.out.print("""
+                ¿Estas seguro de cancelar la cita?
+                1.Si.
+                2.No.
+                """);
+        int opcion = sc.nextInt();
+        boolean acceso = (opcion == 1);
+        if (acceso) {
+            sc.nextLine();
+            //Si es true entonces se cancelará sin antes preguntar ¿por qué?
+            System.out.println("¿Cual es la razón de la cancelación?");
+            String razonCancelar = sc.nextLine();
+            if (cita.cancelarCita()) {
+                //Si regresa un true entonces actualizamos
+                cita.setRazonCancelacion(razonCancelar);
+                System.out.println("Se cancelo la cita medica.");
+            } else {
+                System.out.println("No se cancelo la cita medica.\n");
+                return;
+            }
+        } else {
+            System.out.println("No se cancelo la cita medica.");
+        }
+    }
+
+    //================= VALIDACIÓN DE Doctores ==============
 
     /**
      * Esta funcion es necesaria para que no existan errores, o que ingrese un ID incorrecto.
+     *
      * @param area : El área será dinamico, ya que cuando se ingrese podra ser "MED", "CAR", "PED", "DEN".
-     * @param ID : El ID sirve para validar que si el ID corresponde a esa área, si no sale un error.
+     * @param ID   : El ID sirve para validar que si el ID corresponde a esa área, si no sale un error.
      * @return : regresará un valor booleano con base a la validación del doctor
      */
-    public boolean validarArea(String area, String ID){
-        String doctorID = ID.substring(0,4);
-        //Regresara un valor booleano en este caso si el ID del doctor contiene el rasgo especificado ya sea "MED", "CAR", "PED", "DEN".
+    public boolean validarArea(String area, String ID) {
+        String doctorID = ID.substring(0, 4);
+        //Regresará un valor booleano en este caso si el ID del doctor contiene el rasgo especificado ya sea "MED", "CAR", "PED", "DEN".
         return doctorID.contains(area);
     }
-
-
-
 }

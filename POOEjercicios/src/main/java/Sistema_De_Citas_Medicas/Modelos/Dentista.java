@@ -15,7 +15,7 @@ public class Dentista extends Doctor{
     }
     public void setEspecialidad(String especialidad){
         if(!especialidad.isEmpty()){
-            //Si no esta vacia entonces se guarda el dato
+            //Si no esta vacía entonces se guarda el dato
             this.especialidad = especialidad;
         }else{
             System.out.println("Ingrese un valor valido.\n");

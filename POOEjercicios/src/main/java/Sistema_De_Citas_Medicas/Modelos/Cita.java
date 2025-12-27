@@ -1,5 +1,5 @@
 package Sistema_De_Citas_Medicas.Modelos;
-//Clase estatica para las citas medicas
+//Clase estática para las citas medícas
 public class Cita {
     //Atributos de la clase.
     private String citaID;
@@ -11,6 +11,7 @@ public class Cita {
     private String motivo;
     private float montoExtra = 0;
     private String razonMontoExtra;
+    private String razonCancelacion;
 
     //Metodos de la clase cita.
     public Cita(String citaID, Paciente pacienteID, Doctor doctorID,
@@ -47,6 +48,30 @@ public class Cita {
         }
     }
 
+    public void setRazonMontoExtra(String razonMontoExtra) {
+        if (!razonMontoExtra.isEmpty()) {
+            //Si no esta vacío entonces procedemos a guardar.
+            this.razonMontoExtra = razonMontoExtra;
+        } else {
+            System.out.println("Ingrese un monto valido.");
+        }
+    }
+
+    public void actualizarMontosExtras(String razonMontoExtra, float montoExtra){
+        if(!razonMontoExtra.isEmpty()){
+            this.razonMontoExtra = razonMontoExtra;
+            this.montoExtra = montoExtra;
+        }
+    }
+
+    public void setRazonCancelacion(String razonCancelacion){
+        if(!razonCancelacion.isEmpty()){
+            this.razonCancelacion = razonCancelacion;
+        }else{
+            System.out.println("No se pudo cancelar la cita medica.");
+        }
+    }
+
     public String getCitaID(){
         return citaID;
     }
@@ -61,20 +86,26 @@ public class Cita {
     }
 
     //Funciones para cambiar el estado de la cita medíca
-    public void completarCita(){
+    public boolean completarCita(){
+        boolean completar = false;
         if(estado.equals("Pendiente")){
             this.estado = "Completada";
+            completar = true;
         }else{
             System.out.println("La cita cancelada no puede cambiar de estado.");
         }
+        return completar;
     }
 
-    public void cancelarCita(){
+    public boolean cancelarCita(){
+        boolean cancelar = false;
         if(this.estado.equals("Pendiente")){
             this.estado = "Cancelada";
+            cancelar = true;
         }else{
             System.out.println("No se puede cancelar una cita ya completada.");
         }
+        return cancelar;
     }
 
 

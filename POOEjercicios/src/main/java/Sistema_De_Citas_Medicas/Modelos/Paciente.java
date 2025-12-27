@@ -1,11 +1,10 @@
 package Sistema_De_Citas_Medicas.Modelos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//Clase estatica para las clases hijas.
+//Clase estática para las clases hijas.
 public class Paciente extends Persona{
     //Atributos de la clase
     private String numeroDeTelefono;
@@ -18,21 +17,19 @@ public class Paciente extends Persona{
         this.numeroDeTelefono = numeroDeTelefono;
         this.correo = correo;
     }
-    //Constructor vacio
-
     public String mostrarFechas(){
         StringBuilder fechas = new StringBuilder();
-        for(int i = 0; i < this.historialConsultas.size(); i ++ ){
-            fechas.append("Asistio en la fecha: ").append(historialConsultas.get(i)).append("\n");
+        for (String historialConsulta : this.historialConsultas) {
+            fechas.append("Asistió en la fecha: ").append(historialConsulta).append("\n");
         }
         return fechas.toString();
     }
 
     //Agregar fechas nuevas
-    public void setHistorialConsultas(String fecha){
-        if(!fecha.trim().isEmpty()){
+    public void setHistorialConsultas(String fecha, String motivo){
+        if(!fecha.trim().isEmpty() && !motivo.trim().isEmpty()){
             //Si no esta vacia, entonces agregamos la fecha a la lista
-            historialConsultas.add(fecha);
+            historialConsultas.add(fecha + " : " + motivo);
         }else{
             System.out.println("Agrega una fecha correcta.");
         }
@@ -79,7 +76,7 @@ public class Paciente extends Persona{
             mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +
                       "\nTelefono: " + numeroDeTelefono +
                       "\nCorreo: " + correo +
-                      "\nID: " + getID() +
+                      "\nID: " + getID() + "\n" +
                       mostrarFechas();
         }else{
             mostrar = "\nPaciente: " + getApellidos().concat(" ").concat(getNombres()) +

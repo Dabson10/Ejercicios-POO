@@ -11,7 +11,7 @@ import Sistema_De_Citas_Medicas.Servicios.PacienteServicios;
 import java.util.Scanner;
 
 public class Principal {
-    //Objetos para poder guardar datos desde el incio
+    //Objetos para poder guardar datos desde el inicio
     static PacienteAlmacenamiento almacenPacientes = new PacienteAlmacenamiento();
     static DoctorAlmacenamiento almacenDoctores = new DoctorAlmacenamiento();
     static CitaAlmacenamiento almacenCitas = new CitaAlmacenamiento();
@@ -23,7 +23,7 @@ public class Principal {
 
 
 
-    //Menu principal para la generacion de citas medícas, agregar pacientes y doctores
+    //Menu principal para la generación de citas medícas, agregar pacientes y doctores
     public static void main(String [] args){
         guardarPacientes();
         boolean acceso = true;
@@ -61,13 +61,15 @@ public class Principal {
         }
     }
 
-    //Funcion para guardar datos instantaneamente
+    //Función para guardar datos instantáneamente
     public static void guardarPacientes(){
         //Objeto para tener diferentes datos de pacientes.
         almacenPacientes.setPacientes("PAC_0001", new Paciente("PAC_0001","Juan David" , "Almaraz Gonzalez", "5540641079", "dabson@gmail.com") );
         almacenPacientes.setPacientes("PAC_0002", new Paciente("PAC_0002","Kevin Tadeo" , "Almaraz Gonzalez", "5559862224", "tadeonegrito@gmail.com"));
+        almacenPacientes.setPacientes("PAC_0003", new Paciente("PAC_0003", "Elena Beatriz", "Castillo Rivera", "5512345678", "elena.castillo@gmail.com"));
+        almacenPacientes.setPacientes("PAC_0004", new Paciente("PAC_0004", "Ricardo Saul", "Mendoza Soto", "5598765432", "r.mendoza@outlook.com"));
 
-        //se guardan diferentes tipos de Doctores.
+        //Se guardan diferentes tipos de Doctores.
         // Médicos Generales (MED_0001 a MED_0003)
         almacenDoctores.setDoctores("MED_0001", new MedicoGeneral("MED_0001", "Ana", "López Pérez", 5, "8:00-14:00", true));
         almacenDoctores.setDoctores("MED_0002", new MedicoGeneral("MED_0002", "Roberto", "Gómez Sánchez", 12, "16:00-22:00", false));
@@ -117,5 +119,31 @@ public class Principal {
         almacenDoctores.setDoctores("MED_0039", new MedicoGeneral("MED_0039", "Ana", "López Pérez", 5, "8:00-14:00", false));
         almacenDoctores.setDoctores("MED_0040", new MedicoGeneral("MED_0040", "Roberto", "Gómez Sánchez", 12, "16:00-22:00", true));
         almacenDoctores.setDoctores("MED_0041", new MedicoGeneral("MED_0041", "Carolina", "Díaz Ruiz", 3, "10:00-18:00", false));
+
+
+        //Creación de datos para citas médicas.
+        //Cita para médico general.
+        Paciente paciente1 = almacenPacientes.getPaciente("PAC_0001");
+        Doctor doc1 = almacenDoctores.getDoctores("MED_0039");
+        almacenCitas.setCitas("CIT_0001", new Cita("CIT_0001", paciente1, doc1, "25/12/2025", 1000f, "Gripe normal"));
+        paciente1.setHistorialConsultas("25/12/2025", "Gripe normal");
+
+        //Cita para el pediatra.
+        Paciente paciente2 = almacenPacientes.getPaciente("PAC_0002");
+        Doctor doc2 = almacenDoctores.getDoctores("DEN_0013");
+        almacenCitas.setCitas("CIT_0002", new Cita("CIT_0002", paciente2, doc2, "28/12/2025",1650f, "Posibles braquets."));
+        paciente2.setHistorialConsultas("28/12/2025", "Posibles braquets.");
+
+        //Cita para cardiólogo.
+        Paciente paciente3 = almacenPacientes.getPaciente("PAC_0003");
+        Doctor doc3 = almacenDoctores.getDoctores("CAR_0011");
+        almacenCitas.setCitas("CIT_0003", new Cita("CIT_0003", paciente3, doc3, "30/12/2025", 2400f, "Diagnostico de arritmia."));
+        paciente3.setHistorialConsultas("30/12/2025", "Diagnostico de arritmia.");
+
+        //Cita con un Pediatra.
+        Paciente paciente4 = almacenPacientes.getPaciente("PAC_0004");
+        Doctor doc4 = almacenDoctores.getDoctores("PED_0036");
+        almacenCitas.setCitas("CIT_0004", new Cita("CIT_0004", paciente4, doc4, "01/01/2026",1650, "Ajuste en la dieta del niño dieta."));
+        paciente4.setHistorialConsultas("01/01/2026", "Ajuste en la dieta del niño dieta.");
     }
 }

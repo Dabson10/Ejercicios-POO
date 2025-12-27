@@ -13,7 +13,7 @@ public class DoctorAlmacenamiento {
 
     public void setDoctores(String llave, Doctor valor) {
         if (!llave.isEmpty() || valor != null) {
-            //Si llave tiene caracteres y valor tiene un objeto entonces se guardaran los datos.
+            //Si llave tiene caracteres y valor tiene un objeto entonces se guardarán los datos.
             doctores.put(llave, valor);
         } else {
             System.out.println("No se pudieron guardar los datos.\n");
@@ -26,7 +26,7 @@ public class DoctorAlmacenamiento {
     }
 
 
-    //Obtener el ultimo valor del mapa
+    //Obtener el último valor del mapa
     public Doctor ultimoValor() {
         Doctor ultimoDoctor = null;
         for (Map.Entry<String, Doctor> lista : doctores.entrySet()) {
@@ -67,7 +67,7 @@ public class DoctorAlmacenamiento {
         System.out.println(getDoctores(ID).mostrarDatos());
     }
 
-    //Función que obtienes a todos los doctores de ciertas areas, esto depende totalmente del ID.
+    //Función que obtienes a todos los doctores de ciertas áreas, esto depende totalmente del ID.
     public void obtenerPorArea(String area) {
         boolean existe = false;
         for (Map.Entry<String, Doctor> lista : doctores.entrySet()) {
@@ -79,7 +79,7 @@ public class DoctorAlmacenamiento {
             }
         }
         if (!existe) {
-            //Si el valor es false osea que no se encontro ningun doctor, entonces muestra una alerta
+            //Si el valor es false o sea que no se encontró ningún doctor, entonces muestra una alerta
             System.out.println("No se encontrarón doctores de esa area");
         }
     }
@@ -87,8 +87,8 @@ public class DoctorAlmacenamiento {
     //================= FUNCIONES PARA BUSCAR DOCTORES ESPECIFICOS ===================
 
     /**
-     * Esta funcion buscara a todos los doctores que cumplan con ciertos requisitos.
-     * esta se utilizara en dos funcionalidades o areas diferentes, servira para los cardiologos y
+     * Esta funcion buscará a todos los doctores que cumplan con ciertos requisitos.
+     * Está se utilizará en dos funcionalidades o áreas diferentes, servira para los cardiologos y
      * los pediatras.
      *
      * @param urgencia     : valor booleano que obtendra a los doctores que atiendan o no urgencias medicas.
@@ -103,7 +103,7 @@ public class DoctorAlmacenamiento {
         Cardiologo cardiologo;
         for (Map.Entry<String, Doctor> lista : doctores.entrySet()) {
             ID = lista.getValue().getID();
-            //Buscará a los cardiologos y obtendra el objeto de cardiologo, pero aun no se mostraran los datos.
+            //Buscará a los cardiólogos y obtendrá el objeto de cardiologo, pero aún no se mostrarán los datos.
             if (ID.contains("CAR") && !ID.contains("DEL")) {
                 //Ahora que si encontramos un cardiologo, con confiaza usamos Drowncasting
                 //para acceder a la clase hija.
@@ -120,15 +120,15 @@ public class DoctorAlmacenamiento {
             }
         }
         if(!existe){
-            //Si el existe es diferente a true significa que no se encontraron doctores con esas especificaciones.
+            //Si él existe es diferente a true significa que no se encontraron doctores con esas especificaciones.
             System.out.println("No se encontraron doctores que cumplan los requerimientos.\n");
         }
     }
 
-    //Función para buscar un dentista en especifico.
+    //Función para buscar un dentista en específico.
     public void buscarDentistas(String especialidad){
         //Buscaremos a todos los dentistas que cumplan con la especialidad que se busca.
-        //Recorreremos todo el linkedhashmap buscando todos aquellos que contengan ID en "DEN"
+        //Recorreremos todo el linked hashmap buscando todos aquellos que contengan ID en "DEN"
         String doctorID ="";
         String areaDoc = "";
         boolean existe = false;
@@ -139,7 +139,7 @@ public class DoctorAlmacenamiento {
                 Dentista dentista = (Dentista) lista.getValue();
                 areaDoc = dentista.getEspecialidad();
                 if(areaDoc.equals(especialidad)){
-                    //Si el dentista tiene la misma especialidad que se busca entonces se imprimen los datos del doc
+                    //Si el dentista tiene la misma especialidad que se busca entonces se imprimen los datos del doctor
                     System.out.println(dentista.mostrarDatos());
                     existe = true;
                 }
@@ -161,7 +161,7 @@ public class DoctorAlmacenamiento {
         for(Map.Entry<String, Doctor>lista : doctores.entrySet()){
             doctorID = lista.getKey();
             if(doctorID.contains("PED") && !doctorID.contains("DEL")){
-                //Si contiene de ID el area de "PED" y no contiene "DEL" entonces lo guardamos
+                //Si contiene de ID el areá de "PED" y no contiene "DEL" entonces lo guardamos
                 Pediatra pediatra = (Pediatra) lista.getValue();
                 rangoEdad = pediatra.getRangoEdad().split(" a ");
                 int edad1 = Integer.parseInt(rangoEdad[0]);
@@ -171,14 +171,14 @@ public class DoctorAlmacenamiento {
                 if((edad >= edad1 && edad <= edad2) && doctorUrgencias == urgencias){
                     //Si la edad ingresada es mayor o igual a la edad minima y a su vez, es menor o igual a la
                     //edad maxima entonces procedemos con la valoración.
-                    //Por otro ladó si el doctor atiende urgencias se comparara con la neceidad de la cita.
+                    //Por otro ladó si el doctor atiende urgencias se comparará con la necesidad de la cita.
                     System.out.println(pediatra.mostrarDatos());
                     existe = true;
                 }
             }
         }
         if(!existe){
-            //Si existe sigue en false siginifica que no encontró ningún pediatra
+            //Si existe sigue en "false" significa que no encontró ningún pediatra
             System.out.println("No se encontraron pediatras con esas especificaciones.\n");
         }
     }
@@ -191,11 +191,11 @@ public class DoctorAlmacenamiento {
         for(Map.Entry<String, Doctor>lista : doctores.entrySet()){
             medicoID = lista.getKey();
             if(medicoID.contains("MED") && !medicoID.contains("DEL")){
-                //Si el id contiene "MED" y no contiene "DEL", entonces procedemos
+                //Si él, id contiene "MED" y no contiene "DEL", entonces procedemos
                 MedicoGeneral medico = (MedicoGeneral) lista.getValue();
                 medicoUrgencia = medico.getAtiendeUrgencias();
                 if(medicoUrgencia == urgencia){
-                    //Si coinciden entonces imprimimos los datos del medico.
+                    //Si coinciden entonces imprimimos los datos del médico.
                     System.out.println(medico.mostrarDatos());
                 }
             }

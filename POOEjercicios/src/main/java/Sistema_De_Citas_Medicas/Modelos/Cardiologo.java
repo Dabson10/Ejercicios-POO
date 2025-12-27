@@ -14,7 +14,7 @@ public class Cardiologo extends Doctor{
 
     /**
      *Para saber cuanto cobrara cada cardiologo dependera de su especialidad, para esto mismo
-     * se trata la siguiente funcionalidad. En la cual se calculara en base a su especialidad y un
+     * se trata la siguiente funcionalidad. En la cual se calculara con base a su especialidad y un
      * porcentaje de lo que gana.
      */
     //Getters de la clase
@@ -23,7 +23,7 @@ public class Cardiologo extends Doctor{
     }
     public void setEspecialidad(String especialidad){
         if(!especialidad.isEmpty()){
-            //Si no esta vacio entonces se guarda el valor.
+            //Si no esta vacío entonces se guarda el valor.
             this.especialidad = especialidad;
         }else{
             System.out.println("Valor no reconocido. Ingrese una opción correcta.\n");

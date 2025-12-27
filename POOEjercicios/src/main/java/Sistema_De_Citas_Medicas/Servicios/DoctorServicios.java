@@ -470,6 +470,4 @@ public class DoctorServicios {
         }
     }
 
-//===================== VALIDACIONES EXTRA =====================
-
 }

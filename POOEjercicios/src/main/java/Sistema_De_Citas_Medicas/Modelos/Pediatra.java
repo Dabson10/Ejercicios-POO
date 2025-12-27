@@ -19,7 +19,7 @@ public class Pediatra extends Doctor{
     }
     public void setRangoEdad(String rangoEdad){
         if(!rangoEdad.isEmpty()){
-            //Si no esta vacío entonces se guardan los datos.
+            //Si no está vacío entonces se guardan los datos.
             this.rangoEdad = rangoEdad;
         }else{
             System.out.println("Ingrese un rango de edad.\n");
@@ -40,9 +40,9 @@ public class Pediatra extends Doctor{
      */
     @Override
     public float costeCitaExtra(boolean urgencia, String especialidad){
-        return (urgencia)? (getTarifaPorConsulta() * 0.1f) : 0f;
+        return ((urgencia)? (getTarifaPorConsulta() * 0.1f) : 0f) + getTarifaPorConsulta();
     }
-    //Metodo que muestra los datos del doctor.
+    //Método que muestra los datos del doctor.
     @Override
     public String mostrarDatos(){
         String urgencias = (atiendeUrgencias) ? "Si" : "No";

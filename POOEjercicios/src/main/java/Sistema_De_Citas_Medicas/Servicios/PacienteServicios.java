@@ -7,9 +7,9 @@ import Sistema_De_Citas_Medicas.Utilidades.GeneradorID;
 import java.util.Scanner;
 
 public class PacienteServicios {
-    //Esta clase contendra la logica para agregar nuevos usuarios, editar, eliminar, editar y mostrar pacientes.
+    //Esta clase contendrá la logica para agregar nuevos usuarios, editar, eliminar, editar y mostrar pacientes.
     private PacienteAlmacenamiento pacientes;
-//    private Paciente pacienteModelo;
+//    prívate Paciente pacienteModelo;
     private GeneradorID generadorID;
     private final Scanner sc = new Scanner(System.in);
 
@@ -21,11 +21,11 @@ public class PacienteServicios {
 
 
     public void opcionesPacientes() {
-        //Guarda instantaneamente datos de pacientes.
+        //Guarda instantáneamente datos de pacientes.
 //        pacientes.datosGuardados();
         //switch con las diferentes acciones a realizar con Pacientes.
         boolean validacionAlmacenamiento = pacientes.validarAlmacenamiento();
-        //Si es true es por que hay valores guardados.
+        //Si es true es por qué hay valores guardados.
         System.out.print("""
                 ¿Qué deseas realizar?
                 1.Mostrar Pacientes.
@@ -85,7 +85,7 @@ public class PacienteServicios {
     }
 
     //==================================== AGREGAR PACIENTES ====================================
-    //Funcion para agregar nuevos pacientes.
+    //Función para agregar nuevos pacientes.
     public void menuAgregar() {
         System.out.print("¿Cuantos pacientes quieres agregar? ");
         int cantidad = sc.nextInt();
@@ -96,7 +96,7 @@ public class PacienteServicios {
         }
     }
 
-    //Funcion para obtener los datos del paciente.
+    //Función para obtener los datos del paciente.
     public void agregarPacientes() {
         try {
             System.out.println("=== Ingrese los datos del paciente. ===");
@@ -104,13 +104,13 @@ public class PacienteServicios {
             String nombre = sc.nextLine().trim();
             System.out.print("Apellidos: ");
             String apellidos = sc.nextLine().trim();
-            System.out.print("Numero del telefono: ");
+            System.out.print("Numero del teléfono: ");
             String telefono = sc.nextLine().trim();
-            System.out.print("Correo electronico:");
+            System.out.print("Correo electrónico:");
             String correo = sc.nextLine().trim();
 
             //Se conoce la longitud del arreglo de los pacientes
-            //Para poder obtener y generar bien un ID de usario
+            //Para poder obtener y generar bien un ID de usuario
 
             Paciente ultimoPaciente = pacientes.getUltimoPaciente();
             if(ultimoPaciente == null){
@@ -119,7 +119,6 @@ public class PacienteServicios {
                 pacientes.setPacientes(primerID, objetoGuardar);
             }else{
                 String ultimoID = ultimoPaciente.getID();
-//            System.out.println("La longitud del ID es: " + limiteCadena);
                 int numeroID = Integer.parseInt(ultimoID.substring(4, 8));
 //            System.out.println("El numero es: " + numeroID + ", La cadena recortada es: " + ultimoID.substring(4, 8));
                 String ID = generadorID.generarID((numeroID + 1), "PACIENTES");
@@ -142,8 +141,8 @@ public class PacienteServicios {
         if (validacionAlmacenamiento) {
             System.out.print("""
                     ¿Qué deseas editar?
-                    1.Correo electronico.
-                    2.Numero de telefono.
+                    1.Correo electrónico.
+                    2.Numero de teléfono.
                     """);
             int opcionPaciente = sc.nextInt();
             sc.nextLine();
@@ -152,9 +151,9 @@ public class PacienteServicios {
             System.out.println("No hay pacientes para poder editar.");
         }
     }
-    //Tengo que editar esto bien por que hay un error Claro
+    //Tengo que editar esto bien por qué hay un error Claro
 
-    //Funcion para editar un paciente.
+    //Función para editar un paciente.
     public void buscarPacientes(int opcionPaciente) {
 
         System.out.print("Ingrese el ID del usuario: ");
@@ -163,7 +162,10 @@ public class PacienteServicios {
             switch (opcionPaciente) {
                 case 1 -> actualizarCorreo(editarID);
                 case 2 -> actualizarTelefono(editarID);
-                default -> System.out.println("Seleccione una opcion valida.\n");
+                default -> {
+                    System.out.println("Seleccione una opción valida.\n");
+                    return;
+                }
             }
         }
     }
@@ -179,10 +181,10 @@ public class PacienteServicios {
             //Si el correo es diferente entonces procedemos a guardar los datos.
             Paciente paciente = pacientes.getPaciente(ID);
             paciente.setCorreo(correoNuevo);
-            //Al hacer el gett
+            //Al hacer el get
             System.out.println(paciente.getCorreo());
         }else{
-            System.out.println("Ingrese un correo electronico diferente.\n");
+            System.out.println("Ingrese un correo electrónico diferente.\n");
         }
     }
 
@@ -192,12 +194,12 @@ public class PacienteServicios {
 
         Paciente pacienteAEditar = pacientes.getPaciente(ID);
         if(pacienteAEditar == null){
-            System.out.println("Error, no se encontro al paciente ");
+            System.out.println("Error, no se encontró al paciente ");
             return;
         }
-        System.out.print("Ingresa el nuevo numero de telefono");
+        System.out.print("Ingresa el nuevo numero de teléfono: ");
         String nuevoTelefono = sc.nextLine();
-        pacienteAEditar.setNumeroDeTelefono(nuevoTelefono);
+        pacienteAEditar.setNumeroDeTelefono(nuevoTelefono.trim());
     }
 
     //========================== ELIMINAR PACIENTES ======================
@@ -220,6 +222,8 @@ public class PacienteServicios {
                 paciente.setID(editarID);
                 System.out.println("El paciente se elimino.\n");
 
+            }else{
+                System.out.println("Se conservo al paciente.\n");
             }
         }
     }
@@ -239,7 +243,7 @@ public class PacienteServicios {
             //Si es diferente entonces procede
             acceder = true;
         }else{
-            System.out.print("No se encontro al paciente con ese ID.\n");
+            System.out.print("No se encontró al paciente con ese ID.\n");
         }
         return acceder;
     }
