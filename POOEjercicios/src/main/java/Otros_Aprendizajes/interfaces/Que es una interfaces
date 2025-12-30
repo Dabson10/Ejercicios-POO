@@ -1,0 +1,16 @@
+Para poder explicar primero que es una interfaz debe de quedar claro que es una clase abstracta.
+
+La clase abstracta sirve cuando se tiene una clase padre que se pretende heredar tanto atributos como
+metodos, y que las clases hijas deban cumplir con su implementación, pero el problema de esto es que no
+se puede realizar una implementacion ya se de atributos o metodos si la clase no es hija, por lo que
+si queremos realizar ciertas acciones de la clase abstracta en una que no es hija directa no se podra acceder a estos datos.
+
+Por lo que los interfaces ayudan a que no solamente puedas tener una clase que hereda de una clase padre, tambien puedas implementar
+metodos de un interfaces, aunque las clases sean incompatibles.
+
+Los interfaces funcionan estrictamente como las clases abstractas ya que debes si o si implementar  los metodos del interfaces,
+con esto podras logar unir tanto clases hijas de diferentes clases abstractas utilizando interfaces, sin la necesidad de
+la herencia directa.
+
+Por ejemplo, tenemos la clase avion y la clase Pajaro, ambos no tienen una clase en comun pero comparten un
+comportamiento que es "Volar", lo que la implementacion lograra hacer.

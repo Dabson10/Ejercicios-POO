@@ -1,0 +1,22 @@
+¿Que son las excepciones?
+Durante la creacion de codigo podemos tener errores, ya sea al superar el rango de un arreglo,
+ingresar mal un tipo, hacer mal un Drowncasting, memoria llena, entre otros.
+Por lo que es necesario saber manejar errores en el codigo y para esto sirven las excepciones,
+ya que con estas podemos saber en que parte del codigo esta el error, y que asi el programa
+no cierre abruptmante. Podemos tener excepciones personalizadas cuando cumpla o no cierta accion.
+
+Tipos de excepciones
+Para empezar podemos decir que para capturar excepciones tenemos un arbol que
+indica que tipo de error tenemos ya sea en el codigo, dispositivo o ubicaciones.
+
+Podemos ver a (Throwable) como el padre o en dodne parten las excepciones.
+
+Como hijos podemos encontrar a Exception y a Error
+* Error: Es un error que tiene que ver con el dispositivo en donde se ejecuta el codigo, ya sea un
+error en falta de memoria, fallas en el disco duro, errores que no se pueden resolver mediante codigo.
+
+* Exception: Este tiene dos subramas en donde podemos ver a los errores excepciones validadas y las no validadas.
+en donde se puede ir por errores ya sea de codigo y que el programador debe de corregir, o errores que no necesariamente
+estan en el codigo, ya sea una direccion invalida, etc.
+
+**Validadas: Son aquellas que no dependen directamente del codigo, esto lo podemos ver cuando queremos leer
