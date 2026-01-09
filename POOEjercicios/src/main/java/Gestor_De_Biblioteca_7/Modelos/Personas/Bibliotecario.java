@@ -13,6 +13,10 @@ public class Bibliotecario extends Persona{
 
     @Override
     public String mostrarDatos(){
-        return "";
+        return "ID: " + getPersonaID()+
+                "\nNombre: " + getNombres() +
+                "\nApellidos: " + getApellidos() +
+                "\nCorreo: " + getCorreo()
+                ;
     }
 }

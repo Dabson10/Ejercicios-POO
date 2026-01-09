@@ -15,6 +15,19 @@ public abstract class Persona {
         this.correo = correo;
     }
 
+    public String getPersonaID(){
+        return this.personaID;
+    }
+    public String getCorreo(){
+        return this.correo;
+    }
+    public String getNombres(){
+        return this.nombres;
+    }
+    public String getApellidos(){
+        return this.apellidos;
+    }
+
     /**
      * Esta función servira para mostrar los datos de la persona en cuestion
      * @return : Regresará un String el cual contendra los datos de la Persona

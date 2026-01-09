@@ -35,6 +35,7 @@ public class Principal {
     public boolean menuPrincipal(boolean acceso){
         try{
             System.out.print("""
+                
                 Bienvenido a la biblioteca.
                 ¿Que sección deseas acceder?
                 1.Bibliotecarios o usuarios.
