@@ -14,6 +14,11 @@ public abstract class Persona {
         this.apellidos = apellidos;
         this.correo = correo;
     }
+
+    /**
+     * Esta función servira para mostrar los datos de la persona en cuestion
+     * @return : Regresará un String el cual contendra los datos de la Persona
+     */
     public abstract String mostrarDatos();
 
 }
