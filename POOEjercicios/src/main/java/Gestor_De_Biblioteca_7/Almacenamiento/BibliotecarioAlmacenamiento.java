@@ -37,9 +37,11 @@ public class BibliotecarioAlmacenamiento {
         }
         return ultimo;
     }
+
     /**
      * Esta función servira validar la existencia de correos en algún usuario, por lo que
      * solamente funcionara para eso, si existe un correo regresa un valor si no otro valor.
+     *
      * @param correo : Es el {@code correo} que ingreso el nuevo bibliotecario.
      * @return : Regresara un valor {@code true} si encontro el correo, un {@code false} si no lo encontro.
      */
@@ -50,21 +52,27 @@ public class BibliotecarioAlmacenamiento {
     }
 
     /**
+     *
+     */
+    public void mostrarTodos() {
+        //Esta forma es más fácil de leer y de modificar si el caso es buscar algo en específico
+        biblioAlmacen.values().stream()
+                .filter(Objects::nonNull)
+                .map(Bibliotecario::mostrarDatos)
+                .forEach(System.out::println);
+    }
+
+    /**
      * Esta funcion es simple sirve para guardar valores nuevos en el Mapa.
      *
      * @param llave : Sera el identificador que se guardara en el Mapa.
      * @param valor : El valor es un objeto de la clase Bibliotecario
      */
     public void setBiblioAlmacen(String llave, Bibliotecario valor) {
-        try {
-            if (valor != null) {
-                biblioAlmacen.put(llave, valor);
-            } else {
-                System.out.println("Ingrese un bibliotecario correcto.");
-            }
-        } catch (NullPointerException nulo) {
-            System.out.println("Error del tipo: " + nulo.getMessage());
-            System.out.println("Ingrese un valor que no se nulo.");
+        if (valor != null) {
+            biblioAlmacen.put(llave, valor);
+        } else {
+            System.out.println("Ingrese un bibliotecario correcto.");
         }
     }
 

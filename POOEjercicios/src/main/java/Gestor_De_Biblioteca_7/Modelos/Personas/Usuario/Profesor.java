@@ -15,8 +15,11 @@ public class Profesor extends Usuario {
         return false;
     }
 
-    @Override
-    public String mostrarDatos(){
-        return "";
-    }
+//    @Override
+//    public String mostrarDatos(){
+//        return "ID: " + getPersonaID() +
+//                "\nNombres: " + getNombres() +
+//                "\nApellidos: " + getApellidos() +
+//                "\nCorreo: " + getCorreo();
+//    }
 }
