@@ -127,6 +127,8 @@ public class PersonaServicios {
      * <br>
      * --{@code CorreoIncorrecto} : Excepcion personalizada para cuando el correo no tiene los requerimientos mínimos como
      * {@code "@"} y termina en {@code .com}
+     * <br>
+     * Hay una función similar a esta solamente que esta se encuentra en {@link #agregarUsuarios()}
      */
     public void agregarBiblio() {
         try {
@@ -187,6 +189,10 @@ public class PersonaServicios {
 
     //========================== MENU USUARIOS ================================
 
+    /**
+     * Este menu sera simple solamente dividirá lo que se realizara, como
+     * mostrar usuarios y agregar nuevos.
+     */
 
     public void menuUsuarios(){
         try{
@@ -225,7 +231,10 @@ public class PersonaServicios {
     //========================== MOSTRAR USUARIOS ==============================
 
     /**
-     *
+     *Esta función servirá para mostrar a los usuarios dividiéndolos por el tipo de usuario,
+     * <br>
+     * {@code mostrarPorTipo} : Esta función proviene de {@code UsuarioAlmacenamiento} en donde
+     * se realiza una búsqueda de usuarios mediante Streams filtrando nulos y buscando mediante el ID del usuario
      */
     public void todosLosUsuarios(){
         usuarioAlmacen.mostrarPorTipo("Estudiantes", IdentificadorIDs.EST.toString());
@@ -234,7 +243,11 @@ public class PersonaServicios {
     }
 
     /**
-     *
+     * Esta función servirá para buscar un usuario en específico mediante su ID, este ID se obtendrá
+     * usando la función {@code buscarPersona("usuario")} para asi obtener el ID y
+     * después obtener los datos de este.
+     * Al buscarlo podremos obtener dos datos un null o un objeto, si recibimos el objeto,
+     * mostramos la info del usuario. Si es null entonces no se encontró o no existe
      */
     public void obtenerUsuario(){
         //Se obtiene el ID del usuario
@@ -248,6 +261,10 @@ public class PersonaServicios {
         }
     }
     //========================== AGREGAR USUARIOS ==============================
+
+    /**
+     * Esta función ya ha sido comentada en: {@link #agregarBiblio()}
+     */
     public void agregarUsuarios(){
         try{
             System.out.println("""
@@ -309,17 +326,22 @@ public class PersonaServicios {
             System.out.println("Ingrese los datos que se solicitan.");
         }catch(CorreoIncorrecto correo){
             System.out.println(correo.getMessage());
+        }catch(NullPointerException nulo){
+            System.out.println("Error del tipo: " + nulo.getMessage());
+            System.out.println("Se recibió un valor nulo.");
         }
     }
 
     /**
-     *
-     * @param prefijo
-     * @param ID
-     * @param nombre
-     * @param apellido
-     * @param correo
-     * @param credencial
+     * Esta función es realmente necesaria, ya que aquí se realiza el guardado de datos
+     * en una clase especifíca, obviamente es en la clase que se seleccionó inicialmente,
+     * en esta parte específica se ve claro el polimorfismo
+     * @param prefijo : El prefijo es aquel que se utilizó para la generación del ID y en este caso para dirigir el guardado
+     * @param ID : Este será el ID del usuario.
+     * @param nombre : Nombre del usuario.
+     * @param apellido : Apellido del usuario.
+     * @param correo : Correo del usuario.
+     * @param credencial : Credencial del usuario.
      */
     public void guardarDatos(String prefijo,String ID, String nombre, String apellido,
                              String correo, String credencial){
@@ -327,6 +349,7 @@ public class PersonaServicios {
             case "EST" -> usuarioAlmacen.setPersonasAlmacen(ID, new Estudiante(ID, nombre, apellido, correo, credencial));
             case "PRO" -> usuarioAlmacen.setPersonasAlmacen(ID, new Profesor(ID, nombre, apellido, correo, credencial));
             case "GEN" -> usuarioAlmacen.setPersonasAlmacen(ID, new PublicoGeneral(ID, nombre, apellido, correo, credencial));
+            default -> System.out.println("No se puede guardar el usuario en esa area: " + prefijo);
         }
 
     }
@@ -335,7 +358,7 @@ public class PersonaServicios {
     /**
      * Esta función mostrará un menu que se repetirá en la sección de mostrar bibliotecarios
      * y mostrar Usuarios, por lo que sería mejor ahorrar código
-     *
+     * @param area : Este tendrá el nombre de la areá en la que se usara.
      * @return : Regresará solamente la opción seleccionada.
      */
     public int queSeMostrara(String area) {
@@ -355,6 +378,11 @@ public class PersonaServicios {
         return opcion;
     }
 
+    /**
+     * Esta función solamente servirá para no repetir código de ingresar un ID
+     * @param area : Este tendrá el nombre de la areá en la que se usara.
+     * @return : Regresará el ID del usuario.
+     */
     public String buscarPersona(String area) {
         String ID = "";
         try {
