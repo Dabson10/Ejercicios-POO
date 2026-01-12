@@ -13,14 +13,13 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public int obtenerCantidad(){
-        return 0;
+    public String getTitulo(){
+        return titulo;
     }
     public String mostrarDatos(){
         return  "Titulo: " + titulo +
                 "\nAutor: " + autor +
                 "\nCategoria: " + categoria +
-                "\nISBN: " + ISBN +
-                "\nCantidad: " + obtenerCantidad();
+                "\nISBN: " + ISBN;
     }
 }

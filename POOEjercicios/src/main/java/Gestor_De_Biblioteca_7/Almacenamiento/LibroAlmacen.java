@@ -13,6 +13,9 @@ public class LibroAlmacen {
         this.libroAlmacen = new LinkedHashMap<>();
     }
 
+    //Esta función es sencilla y requerida, ya que si el mapa esta vació entonces regresa un true, si no un false,
+    //logrando asi saber si podemos mostrar usuarios y limitar acceso en caso de que no existan.
+    public boolean existenLibros(){return libroAlmacen.isEmpty();}
     public void setLibroAlmacen(String llave, Libro valor){
         if(valor != null){
             libroAlmacen.put(llave, valor);
@@ -21,7 +24,8 @@ public class LibroAlmacen {
         }
     }
 
-    public Libro getLLibroAlmacen(String llave){
+    // Cuidado con este getter, ya que puede regresar un null si no se encuentra con la llave.
+    public Libro getLibroAlmacen(String llave){
         return libroAlmacen.get(llave);
     }
 

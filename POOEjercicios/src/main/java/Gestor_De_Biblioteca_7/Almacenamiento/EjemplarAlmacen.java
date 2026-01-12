@@ -22,20 +22,23 @@ public class EjemplarAlmacen {
         }
     }
     //* Obtener el valor del mapa en base a un ID
-    public Ejemplar obtenerEjemplar(String ID) {return this.ejemplarAlmacen.get(ID);}
+    public Ejemplar getEjemplar(String ID) {return this.ejemplarAlmacen.get(ID);}
 
+    //Esta función es sencilla y requerida, ya que si el mapa esta vació entonces regresa un true, si no un false,
+    //logrando asi saber si podemos mostrar usuarios y limitar acceso en caso de que no existan.
+    public boolean mapaVacio(){return ejemplarAlmacen.isEmpty();}
     /**
      * Esta función es la mas importante de todo el código.
      * Lo que esta función hace es mostrar 1 solo ejemplar de un libro,
-     * pero a su vez cuenta la cantidad total.
+     * pero a su vez cuenta la cantidad total. Y lo guarda en un mapa, logrando asi
+     * guardar mas de 1 ejemplar diferente.
      * Después de esto un bucle for mostrara los datos obtenidos
      *
-     * @param prefijo : El prefijo servirá para tener en claro que se buscara
      */
-    public void recuentoEjemplares(String prefijo) {
+    public void recuentoEjemplares() {
         Map<String, Long> lista = ejemplarAlmacen.values().stream()
                 .filter(Objects::nonNull)
-                .filter(ejemplar -> ejemplar.getEjemplarID().contains(prefijo))
+                .distinct()
                 .collect(Collectors.groupingBy(
                         Ejemplar::mostrarDatos,
                         Collectors.counting()
@@ -44,6 +47,27 @@ public class EjemplarAlmacen {
             System.out.println("============|Ejemplar |============");
             System.out.println(conteo.getKey());
             System.out.println("Cantidades existentes: " + conteo.getValue());
+        }
+    }
+
+    public void obtenerEjemplar(String prefijo){
+        Map<String, Long> ejemplarB = ejemplarAlmacen.values().stream()
+                .filter(Objects::nonNull)
+                .filter( ej -> ej.getEjemplarID().contains(prefijo))
+                .collect(Collectors.groupingBy(
+                        Ejemplar::mostrarDatos,
+                        Collectors.counting()
+                ));
+        if(!ejemplarB.isEmpty()){
+            //Si no esta vació entonces procedemos a mostrar los datos.
+            for(Map.Entry<String, Long>lista : ejemplarB.entrySet()){
+                System.out.println("===========| Ejemplar |===============");
+                System.out.println(lista.getKey() +
+                        "\nExistentes." + lista.getValue());
+                System.out.println("======================================");
+            }
+        }else{
+            System.out.println("No se encontró el ejemplar.");
         }
     }
 

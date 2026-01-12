@@ -1,7 +1,10 @@
 package Gestor_De_Biblioteca_7;
 
 import Gestor_De_Biblioteca_7.Almacenamiento.BibliotecarioAlmacenamiento;
+import Gestor_De_Biblioteca_7.Almacenamiento.EjemplarAlmacen;
+import Gestor_De_Biblioteca_7.Almacenamiento.LibroAlmacen;
 import Gestor_De_Biblioteca_7.Almacenamiento.UsuarioAlmacenamiento;
+import Gestor_De_Biblioteca_7.servicios.LibroServicios;
 import Gestor_De_Biblioteca_7.servicios.PersonaServicios;
 
 import java.util.InputMismatchException;
@@ -13,6 +16,10 @@ public class Principal {
     UsuarioAlmacenamiento almacenPersonas = new UsuarioAlmacenamiento();
     BibliotecarioAlmacenamiento almacenBiblio = new BibliotecarioAlmacenamiento();
     PersonaServicios servicioPersonas = new PersonaServicios(almacenPersonas, almacenBiblio);
+    //Libro y Ejemplares.
+    LibroAlmacen libroAlmacen = new LibroAlmacen();
+    EjemplarAlmacen ejemplarAlmacen = new EjemplarAlmacen();
+    LibroServicios  servicioLibros = new LibroServicios(ejemplarAlmacen, libroAlmacen );
     //Libro
     Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
@@ -46,7 +53,7 @@ public class Principal {
             int opcion = sc.nextInt();
             switch(opcion){
                 case 1 -> servicioPersonas.menuPersonas();
-                case 2 ->{}
+                case 2 ->servicioLibros.menuLibros();
                 case 3 ->{}
                 case 4 ->{
                     System.out.println("Hasta luego.");

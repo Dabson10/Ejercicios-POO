@@ -20,6 +20,9 @@ public class Ejemplar {
     }
 
     public String mostrarDatos(){
-        return "";
+        String dispo = (disponible)? "Disponible" : "No disponible";
+        return "ID Ejemplar: " + ejemplarID +
+                "\n" + libroInfo.mostrarDatos() +
+                "\nDisponible: " + dispo;
     }
 }
