@@ -2,9 +2,7 @@ package Gestor_De_Biblioteca_7.Almacenamiento;
 
 import Gestor_De_Biblioteca_7.Modelos.Ejemplar;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EjemplarAlmacen {
@@ -30,44 +28,66 @@ public class EjemplarAlmacen {
     /**
      * Esta función es la mas importante de todo el código.
      * Lo que esta función hace es mostrar 1 solo ejemplar de un libro,
-     * pero a su vez cuenta la cantidad total. Y lo guarda en un mapa, logrando asi
-     * guardar mas de 1 ejemplar diferente.
-     * Después de esto un bucle for mostrara los datos obtenidos
-     *
+     * pero a su vez cuenta la cantidad total.
+     * Pero si esta compleja de leer, asi que la desglosare
+     * <br>
+     * Primer {@code for()} : lo que hace es recorrer el mapa principal
+     * {@code ejemplarAlmacen}, y guardara en el mapa {@code conteo} un solo ejemplar,
+     * <br>
+     * Segundo {@code for()} : Se recorrerá el mapa de conteo y en cada recorrido se realiza un conteo con base al
+     *                      mapa principal y este conteo se guardará en un arraylist de tipo Long para asi tener bien
+     *                      posicionado el conteo de cada libro.
+     * <br>
+     * Tercer {@code for()} : Este bucle es el más sencillo, ya que en este solo recorremos el mapa que tiene 1 solo ejemplar
+     *      Y mostramos los datos del objeto y el contador
      */
     public void recuentoEjemplares() {
-        Map<String, Long> lista = ejemplarAlmacen.values().stream()
-                .filter(Objects::nonNull)
-                .distinct()
-                .collect(Collectors.groupingBy(
-                        Ejemplar::mostrarDatos,
-                        Collectors.counting()
-                ));
-        for (Map.Entry<String, Long> conteo : lista.entrySet()) {
-            System.out.println("============|Ejemplar |============");
-            System.out.println(conteo.getKey());
-            System.out.println("Cantidades existentes: " + conteo.getValue());
+        //Este mapa servirá para guardar un ejemplar de cada uno.
+        Map<String, Ejemplar> conteo = new LinkedHashMap<>();
+        List<Long> contador = new ArrayList<>();
+        for(Map.Entry<String, Ejemplar>lista : ejemplarAlmacen.entrySet()){
+            conteo.put(lista.getKey().substring(0, 3), lista.getValue());
+        }
+
+        for(Map.Entry<String, Ejemplar>lista : conteo.entrySet() ){
+             contador.add(ejemplarAlmacen.values().stream()
+                     .filter(Objects::nonNull)
+                     .filter(ej -> ej.getEjemplarID().contains(lista.getKey()))
+                     .count());
+        }
+        int limite = contador.size();
+        int count = 0;
+        System.out.println(limite);
+        for(Map.Entry<String, Ejemplar>lista : conteo.entrySet()){
+            System.out.println("--------------------------");
+            System.out.println(lista.getValue().mostrarDatos());
+            if(count < limite){
+                System.out.println("Ejemplares: " +contador.get(count));
+                System.out.println("--------------------------");
+
+            }
+            count++;
         }
     }
 
     public void obtenerEjemplar(String prefijo){
-        Map<String, Long> ejemplarB = ejemplarAlmacen.values().stream()
-                .filter(Objects::nonNull)
-                .filter( ej -> ej.getEjemplarID().contains(prefijo))
-                .collect(Collectors.groupingBy(
-                        Ejemplar::mostrarDatos,
-                        Collectors.counting()
-                ));
-        if(!ejemplarB.isEmpty()){
-            //Si no esta vació entonces procedemos a mostrar los datos.
-            for(Map.Entry<String, Long>lista : ejemplarB.entrySet()){
-                System.out.println("===========| Ejemplar |===============");
-                System.out.println(lista.getKey() +
-                        "\nExistentes." + lista.getValue());
-                System.out.println("======================================");
+        Ejemplar ejemplar = null;
+        for(Map.Entry<String, Ejemplar>lista : ejemplarAlmacen.entrySet()){
+            if(lista.getValue().getEjemplarID().contains(prefijo)){
+                ejemplar = lista.getValue();
+                break;
             }
-        }else{
-            System.out.println("No se encontró el ejemplar.");
+        }
+        if(ejemplar != null ){
+            //Si es diferente a null, entonces procedemos con el conteo de ejemplares.
+            Long cantidad = ejemplarAlmacen.values().stream()
+                    .filter(Objects::nonNull)
+                    .filter( ej -> ej.getEjemplarID().contains(prefijo))
+                    .count();
+            System.out.println("|=========| Ejemplar encontrado |=========|");
+            System.out.println(ejemplar.mostrarDatos());
+            System.out.println("Ejemplares totales: " + cantidad);
+            System.out.println("|=========================================|");
         }
     }
 

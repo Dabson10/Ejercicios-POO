@@ -31,16 +31,14 @@ public class LibroServicios {
                     ¿Qué acción deseas realizar?
                     1.Mostrar Libros.
                     2.Agregar Libros.
-                    3.Editar Ejemplares.
-                    4.Regresar al inicio.
+                    3.Regresar al inicio.
                     Seleccione su opción: """);
             int opcion = sc.nextInt();
             sc.nextLine();
             switch(opcion){
                 case 1 ->menuMostrar();
                 case 2 ->agregarLibros();
-                case 3 ->{}
-                case 4 -> System.out.println("Regresando al inicio.");
+                case 3 -> System.out.println("Regresando al inicio.");
                 default -> System.out.println("Ingrese una opción correcta.");
             }
         }catch(InputMismatchException tipo){
@@ -52,7 +50,7 @@ public class LibroServicios {
     public void menuMostrar(){
         boolean mapaVacio = libroAlmacen.existenLibros();
         if(!mapaVacio){
-            //Si mapa tiene algun dato entonces mostramos la opcion del menu
+            //Si mapa tiene algún dato entonces mostramos la opcion del menu
             int mostrarOpc = menuSeleccion("Mostrar", "Mostrar", "todos", "específicos", "Regresar al inicio");
             switch(mostrarOpc){
                 //Opción para mostrar todos
@@ -67,25 +65,28 @@ public class LibroServicios {
     }
 
     /**
-     * Lo que hace esta función inicialmente es llamar a {@link #obtenerID(String)},
+     * Lo que hace esta función inicialmente es llamar a {@link #obtenerID(String, String)},
      * después de esto usa la función {@link EjemplarAlmacen#obtenerEjemplar(String)},
      * que con base al prefijo buscara similitudes y contara cuantas existen o se repiten,
      * mostrando los datos del libro y cuantos existen.
      */
     public void mostrarPorID(){
-        String ID = obtenerID("Libro");
+        String ID = obtenerID("Libro", "ISBN");
         Libro libro = libroAlmacen.getLibroAlmacen(ID);
         if(libro != null){
             //Si es diferente entonces existe por lo que obtenemos el nombre y sacamos el ID
             String nombre = libro.getTitulo().substring(0, 3);
-            ejemplarAlmacen.obtenerEjemplar(nombre);
-            System.out.println("Hola mundo: " );
+            ejemplarAlmacen.obtenerEjemplar(nombre.toUpperCase());
         }else{
-            System.out.println("No se encontro al usuario.");
+            System.out.println("No se encontró al usuario.");
         }
     }
 
     // =========================| AGREGAR LIBROS |=======================
+
+    /**
+     *
+     */
     public void agregarLibros(){
         try{
             System.out.println("""
@@ -166,9 +167,9 @@ public class LibroServicios {
         sc.nextLine();
         return opcion;
     }
-    public String obtenerID(String busqueda){
+    public String obtenerID(String busqueda , String objetivo){
         String ID = "";
-        System.out.print("Ingrese el ID del " + busqueda + ": ");
+        System.out.print("Ingrese el" + objetivo + " del " + busqueda + ": ");
         ID = sc.nextLine();
         return ID;
     }

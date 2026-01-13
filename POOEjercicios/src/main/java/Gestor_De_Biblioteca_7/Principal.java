@@ -4,6 +4,8 @@ import Gestor_De_Biblioteca_7.Almacenamiento.BibliotecarioAlmacenamiento;
 import Gestor_De_Biblioteca_7.Almacenamiento.EjemplarAlmacen;
 import Gestor_De_Biblioteca_7.Almacenamiento.LibroAlmacen;
 import Gestor_De_Biblioteca_7.Almacenamiento.UsuarioAlmacenamiento;
+import Gestor_De_Biblioteca_7.Modelos.Ejemplar;
+import Gestor_De_Biblioteca_7.Modelos.Libro;
 import Gestor_De_Biblioteca_7.servicios.LibroServicios;
 import Gestor_De_Biblioteca_7.servicios.PersonaServicios;
 
@@ -25,6 +27,7 @@ public class Principal {
     public static void main(String[] args) {
         boolean acceso = true;
         Principal principal = new Principal();
+        principal.agregarDatos();
         while(acceso){
             try{
                 acceso = principal.menuPrincipal(acceso);
@@ -68,5 +71,37 @@ public class Principal {
         }
         return acceso;
     }
+    //Esta funcion servira para agregar datos iniciales.
 
+    public void agregarDatos(){
+        //Datos de libros.
+        Libro libro = new Libro("Los juegos del hambre", "Suzanne C", "978-607-400-450", "Fantasia");
+        libroAlmacen.setLibroAlmacen("978-607-400-450", new Libro("Los juegos del hambre", "Suzanne C", "978-607-400-450", "Fantasia"));
+        ejemplarAlmacen.setEjemplarAlmacen("LOS_0001", new Ejemplar("LOS_0001", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("LOS_0002", new Ejemplar("LOS_0002", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("LOS_0003", new Ejemplar("LOS_0003", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("LOS_0004", new Ejemplar("LOS_0004", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("LOS_0005", new Ejemplar("LOS_0005", libro));
+
+        // --- LIBRO 1: Harry Potter y la Piedra Filosofal ---
+        libro = new Libro("Harry Potter y la Piedra Filosofal", "J.K. Rowling", "978-847-888-445", "Fantasia");
+        libroAlmacen.setLibroAlmacen("978-847-888-445", libro);
+        ejemplarAlmacen.setEjemplarAlmacen("HAR_0001", new Ejemplar("HAR_0001", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("HAR_0002", new Ejemplar("HAR_0002", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("HAR_0003", new Ejemplar("HAR_0003", libro));
+
+// --- LIBRO 2: El Principito ---
+        libro = new Libro("El Principito", "Antoine de Saint-Exupéry", "978-970-718-208", "Literatura Infantil");
+        libroAlmacen.setLibroAlmacen("978-970-718-208", libro);
+        ejemplarAlmacen.setEjemplarAlmacen("PRI_0001", new Ejemplar("PRI_0001", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("PRI_0002", new Ejemplar("PRI_0002", libro));
+
+// --- LIBRO 3: 1984 ---
+        libro = new Libro("1984", "George Orwell", "978-849-989-094", "Distopia");
+        libroAlmacen.setLibroAlmacen("978-849-989-094", libro);
+        ejemplarAlmacen.setEjemplarAlmacen("198_0001", new Ejemplar("198_0001", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("198_0002", new Ejemplar("198_0002", libro));
+        ejemplarAlmacen.setEjemplarAlmacen("198_0003", new Ejemplar("198_0003", libro));
+
+    }
 }
