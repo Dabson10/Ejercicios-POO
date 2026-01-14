@@ -21,50 +21,54 @@ public class Principal {
     //Libro y Ejemplares.
     LibroAlmacen libroAlmacen = new LibroAlmacen();
     EjemplarAlmacen ejemplarAlmacen = new EjemplarAlmacen();
-    LibroServicios  servicioLibros = new LibroServicios(ejemplarAlmacen, libroAlmacen );
+    LibroServicios servicioLibros = new LibroServicios(ejemplarAlmacen, libroAlmacen);
     //Libro
     Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         boolean acceso = true;
         Principal principal = new Principal();
         principal.agregarDatos();
-        while(acceso){
-            try{
+        while (acceso) {
+            try {
                 acceso = principal.menuPrincipal(acceso);
-            }catch(InputMismatchException tipos){
+            } catch (InputMismatchException tipos) {
                 System.out.println("Error del tipo: " + tipos.getMessage());
                 System.out.println("Ingrese datos correctamente.");
                 principal.sc.nextLine();
             }
         }
     }
+
     //Otros metodos necesarios para ejecutar correctamente la biblioteca.
-    public void validarCorreo(){
+    public void validarCorreo() {
 
     }
-    public boolean menuPrincipal(boolean acceso){
-        try{
+
+    public boolean menuPrincipal(boolean acceso) {
+        try {
             System.out.print("""
-                
-                Bienvenido a la biblioteca.
-                ¿Que sección deseas acceder?
-                1.Bibliotecarios o usuarios.
-                2.Libros y Ejemplares.
-                3.Prestamos.
-                4.Salir.
-                """);
+                    
+                    Bienvenido a la biblioteca.
+                    ¿Que sección deseas acceder?
+                    1.Bibliotecarios o usuarios.
+                    2.Libros y Ejemplares.
+                    3.Prestamos.
+                    4.Salir.
+                    """);
             int opcion = sc.nextInt();
-            switch(opcion){
+            switch (opcion) {
                 case 1 -> servicioPersonas.menuPersonas();
-                case 2 ->servicioLibros.menuLibros();
-                case 3 ->{}
-                case 4 ->{
+                case 2 -> servicioLibros.menuLibros();
+                case 3 -> {
+                }
+                case 4 -> {
                     System.out.println("Hasta luego.");
                     acceso = false;
                 }
                 default -> System.out.println("Ingrese una opción correcta.");
             }
-        }catch(InputMismatchException tipos){
+        } catch (InputMismatchException tipos) {
             System.out.println("Error del tipo: " + tipos.getMessage());
             System.out.println("Ingrese datos correctamente.\n");
             sc.nextLine();
@@ -73,7 +77,7 @@ public class Principal {
     }
     //Esta funcion servira para agregar datos iniciales.
 
-    public void agregarDatos(){
+    public void agregarDatos() {
         //Datos de libros.
         Libro libro = new Libro("Los juegos del hambre", "Suzanne C", "978-607-400-450", "Fantasia");
         libroAlmacen.setLibroAlmacen("978-607-400-450", new Libro("Los juegos del hambre", "Suzanne C", "978-607-400-450", "Fantasia"));

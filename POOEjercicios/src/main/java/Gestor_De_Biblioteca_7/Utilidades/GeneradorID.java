@@ -5,8 +5,8 @@ import Gestor_De_Biblioteca_7.Excepciones.LimiteIDs;
 public class GeneradorID {
 
     /**
-     * Esta función servira para generar ID a todas las clases que los ocupen, pero sí o si se necesitará
-     * contar con el prefijo del área que podria ser BIB, EST, PRO, etc. Y la última posicion
+     * Esta función servirá para generar ID a todas las clases que los ocupen, pero sí o si se necesitará
+     * contar con el prefijo del área que podría ser BIB, EST, PRO, etc. Y la última posicion
      * del ID del área.
      * @param prefijo : Areá de la clase en la que se usara el ID
      * @param posicion : Ultima posiciono ultimo ID guardado.
