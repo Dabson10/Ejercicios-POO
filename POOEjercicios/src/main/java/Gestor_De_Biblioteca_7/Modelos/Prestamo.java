@@ -55,6 +55,13 @@ public class Prestamo {
             activo = true;
         }
     }
+    public void setMulta(LocalDate entregadoEn){
+        if(entregadoEn.isAfter(seEntregaraEn)){
+            //Si la fecha que se entregó después de la fecha limite entonces MULTA
+//            long diasTranscurridos =
+//            solicitoElUsuario.setMulta();
+        }
+    }
     public String mostrarDatos(){
         String estado = (activo)? "Prestado" : "Devuelto";
         return "ID: " + prestamoID +

@@ -18,9 +18,14 @@ public class Ejemplar {
     public String getEjemplarID(){
         return this.ejemplarID;
     }
+    //Esta función lo que hace es cambiar la disponibilidad del
+    //ejemplar
+    public void disponibilidad(){
+        this.disponible = !this.disponible;
+    }
 
     public String mostrarDatos(){
-        String dispo = (disponible)? "Disponible" : "No disponible";
+        String dispo = (disponible)? "Disponible" : "Prestado.";
         return "ID Ejemplar: " + ejemplarID +
                 "\n" + libroInfo.mostrarDatos() +
                 "\nDisponible: " + dispo;

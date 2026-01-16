@@ -57,7 +57,7 @@ public class PrestamoServicios {
     }
 
     public void mostrarPorID() {
-        String ID = obtenerID("prestamo");
+        String ID = obtenerID("préstamo");
 
         Prestamo prestamo = prestamoAlmacen.getPrestamoAlmacen(ID);
         if(prestamo != null){
@@ -70,15 +70,20 @@ public class PrestamoServicios {
 
     //=================== AGREGAR PRESTAMOS ===========================\\
     public void agregarPrestamo(){
+        sc.nextLine();
         //Obtener el usuario y validar su existencia
         String usuarioID = obtenerID("usuario");
-        Usuario usuario = usuarioAlmacen.getUsuariosAlmacen(usuarioID);
-        if(usuario != null){
-            System.out.println("Usuario existente.");
-        }else{
-            System.out.println("Usuario no existe.");
+        Usuario usuario = usuarioAlmacen.obtenerUsuario(usuarioID);
+        //Valida si el usuario existe
+        if(usuario == null){return;}
+        //Valída si el usuario puede pedir un libro más.
+        if(usuario.validarLimiteLibros()){
+            System.out.println("No puedes pedir mas libros." +
+                    "\nRegresa los que pediste prestados.");
             return;
         }
+        //Valída que el usuario no tenga deudas.
+
         //Obtener el ejemplar y validación
         String ejemplarID = obtenerID("ejemplar");
         Ejemplar ejemplar = ejemplarAlmacen.getEjemplar(ejemplarID);

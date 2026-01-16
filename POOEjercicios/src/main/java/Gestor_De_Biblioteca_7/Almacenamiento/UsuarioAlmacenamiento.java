@@ -1,5 +1,6 @@
 package Gestor_De_Biblioteca_7.Almacenamiento;
 
+import Gestor_De_Biblioteca_7.Excepciones.UsuarioNoEncontrado;
 import Gestor_De_Biblioteca_7.Modelos.Personas.Usuario.Usuario;
 
 import java.util.LinkedHashMap;
@@ -43,6 +44,21 @@ public class UsuarioAlmacenamiento {
         return usuariosAlmacen.get(ID);
     }
 
+    public Usuario obtenerUsuario(String ID){
+        Usuario usuario = null;
+        try{
+            usuario = usuariosAlmacen.get(ID);
+            validarUsuario(usuario);
+        }catch (UsuarioNoEncontrado persona){
+            System.out.println(persona.getMessage());
+        }
+        return usuario;
+    }
+    public void validarUsuario(Usuario usuario){
+        if(usuario == null){
+            throw new UsuarioNoEncontrado("No se encontró al usuario");
+        }
+    }
     /**
      * buscarCorreo(String): Sirve para eso buscar en el mapa si hay
      * algún correo devuelve un true y deja de buscar.

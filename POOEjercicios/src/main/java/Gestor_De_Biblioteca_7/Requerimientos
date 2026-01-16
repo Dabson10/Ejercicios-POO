@@ -1,0 +1,153 @@
+ SISTEMA DE GESTIÓN DE BIBLIOTECA - REQUERIMIENTOS ESENCIALES
+
+🎯 OBJETIVO
+Sistema para gestionar préstamos de libros con control de ejemplares individuales, multas y tipos de usuarios.
+
+👥 TIPOS DE USUARIO
+TipoLímite librosDías préstamoEstudiante314Profesor530Público27
+
+📚 ESTRUCTURA DE DATOS
+Catálogo (Títulos)
+
+ISBN, título, autor, categoría
+
+Ejemplares (Copias físicas)
+
+Cada título puede tener múltiples copias
+Cada ejemplar tiene ID único: ISBN-XXX (ej: 978-0307474728-001)
+Estado: Disponible/Prestado
+
+Usuario
+
+ID, nombre, apellidos, correo
+Libros prestados (lista de ejemplares)
+Multas acumuladas
+
+Préstamo
+
+Ejemplar específico prestado
+Usuario que lo solicitó
+Fechas (préstamo y devolución)
+Estado: Activo/Devuelto
+
+
+⚙️ REGLAS DE NEGOCIO
+RN-01: Límites
+Usuario no puede exceder su límite de libros simultáneos.
+RN-02: Disponibilidad
+Un ejemplar solo puede estar prestado a un usuario a la vez. Si hay otros ejemplares del mismo título disponibles, sí se pueden prestar.
+RN-03: Múltiples ejemplares
+Al registrar título, especificar cantidad de copias. Sistema genera IDs únicos para cada ejemplar.
+RN-04: Multas
+
+Retraso = $5 por día
+Se acumulan en cuenta del usuario
+
+RN-05: Restricción por multas
+Usuario con multas pendientes NO puede pedir nuevos libros.
+RN-06: Renovación
+
+Solo si préstamo NO ha vencido
+Máximo 1 renovación por préstamo
+Extiende por mismos días originales
+
+RN-07: Búsqueda eficiente
+Sistema debe localizar préstamo directamente usando ID del ejemplar (no buscar entre todos los usuarios).
+
+🚫 EXCEPCIONES REQUERIDAS (Mínimo 10)
+
+LibroNoDisponibleException - Ejemplar ya prestado
+TituloSinEjemplaresDisponiblesException - Todas las copias prestadas
+UsuarioConMultasException - Usuario tiene multas pendientes
+LimitePrestamosException - Usuario alcanzó máximo
+PrestamoVencidoException - Intenta renovar préstamo vencido
+TituloNoEncontradoException - ISBN no existe en catálogo
+EjemplarNoEncontradoException - ID de ejemplar no existe
+UsuarioNoEncontradoException - ID de usuario no existe
+PrestamoNoEncontradoException - Ejemplar no tiene préstamo activo
+DatosInvalidosException - Datos incompletos o inválidos
+
+
+📋 FUNCIONALIDADES MÍNIMAS
+Gestión de Catálogo
+
+Registrar título con N ejemplares
+Buscar título por ISBN/nombre
+Ver catálogo completo
+
+Gestión de Ejemplares
+
+Ver ejemplares de un título
+Consultar disponibilidad
+Buscar ejemplar por ID
+
+Gestión de Usuarios
+
+Registrar usuario (3 tipos)
+Buscar usuario
+Ver préstamos de usuario
+
+Gestión de Préstamos
+
+Prestar libro (validar reglas)
+Devolver libro (calcular multa si aplica)
+Renovar préstamo
+Ver préstamos activos
+
+Gestión de Multas
+
+Calcular multas automáticamente
+Registrar pago
+Consultar multas por usuario
+
+Reportes
+
+Ejemplares prestados
+Préstamos vencidos
+Títulos sin ejemplares disponibles
+
+
+📊 ESCENARIOS DE PRUEBA OBLIGATORIOS
+1. Registro título con ejemplares
+Registrar "Cien años de soledad" con 3 ejemplares → Genera 3 IDs únicos
+2. Préstamo cuando hay disponibles
+Título con 3 ejemplares (1 prestado, 2 disponibles) → Usuario pide uno de los disponibles → Éxito
+3. Rechazo por todas prestadas
+Título con 2 ejemplares (ambos prestados) → Usuario lo pide → Excepción
+4. Devolución con multa
+Préstamo vence 08/01, devuelven 15/01 → Multa: 7 días × $5 = $35
+5. Usuario alcanza límite
+Público tiene 2 libros (límite) → Intenta pedir tercero → Excepción
+6. Consulta disponibilidad
+Título con 4 ejemplares (2 prestados, 2 disponibles) → Mostrar detalle de cada ejemplar
+7. Renovación exitosa
+Préstamo activo solicitado antes de vencer → Nueva fecha: +días según tipo usuario
+8. Múltiples usuarios, mismo título
+5 usuarios piden mismo título (5 ejemplares) → Todos exitosos, sexto usuario rechazado
+
+✅ CRITERIOS DE ACEPTACIÓN
+
+ Herencia: Usuario → 3 tipos
+ Mínimo 2 interfaces
+ 10 excepciones personalizadas
+ Distingue Título vs Ejemplar
+ Genera IDs únicos para ejemplares
+ Búsqueda directa de préstamo por ID ejemplar
+ Maneja múltiples ejemplares del mismo título
+ Todas las reglas de negocio implementadas
+ 8 escenarios de prueba funcionando
+ Menú completo funcional
+ Código organizado en capas
+ Sin código duplicado
+
+
+🚀 RESTRICCIONES TÉCNICAS
+
+Java puro (sin frameworks)
+Sin base de datos (colecciones en memoria)
+Interfaz de consola (Scanner)
+Fechas: String o LocalDate
+
+
+⏱️ TIEMPO ESTIMADO
+1.5-2 semanas

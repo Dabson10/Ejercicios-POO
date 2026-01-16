@@ -252,12 +252,10 @@ public class PersonaServicios {
     public void obtenerUsuario(){
         //Se obtiene el ID del usuario
         String ID = buscarPersona("usuario");
-        Usuario usuario = usuarioAlmacen.getUsuariosAlmacen(ID);
+        Usuario usuario = usuarioAlmacen.obtenerUsuario(ID);
         if(usuario != null){
             //Si es diferente a null es por qué encontró al usuario.
             System.out.println(usuario.mostrarDatos());
-        }else{
-            System.out.println("No se encontró al usuario.");
         }
     }
     //========================== AGREGAR USUARIOS ==============================

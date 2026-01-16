@@ -10,16 +10,13 @@ public class PublicoGeneral extends Usuario{
         return false;
     }
 
+    //Como tal los usuarios o publico general tiene una cantidad maxima de
     @Override
-    public boolean validarLimiteLibros(int cantidad){
-        return false;
+    public boolean validarLimiteLibros(){
+        boolean prestar = false;
+        if((obtenerCantidadLibros()) >= 2){
+            prestar = true;
+        }
+        return prestar;
     }
-
-//    @Override
-//    public String mostrarDatos(){
-//        return "ID: " + getPersonaID() +
-//                "\nNombres: " + getNombres() +
-//                "\nApellidos: " + getApellidos() +
-//                "\nCorreo: " + getCorreo();
-//    }
 }

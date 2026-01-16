@@ -14,14 +14,11 @@ public class Estudiante extends Usuario {
     }
 
     @Override
-    public boolean validarLimiteLibros(int cantidad){
-        return false;
+    public boolean validarLimiteLibros(){
+        boolean prestar = false;
+        if((obtenerCantidadLibros()) >= 3){
+            prestar = true;
+        }
+        return prestar;
     }
-//    @Override
-//    public String mostrarDatos(){
-//        return "ID: " + getPersonaID() +
-//                "\nNombres: " + getNombres() +
-//                "\nApellidos: " + getApellidos() +
-//                "\nCorreo: " + getCorreo();
-//    }
 }

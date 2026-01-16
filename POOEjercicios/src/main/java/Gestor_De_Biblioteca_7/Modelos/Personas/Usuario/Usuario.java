@@ -14,41 +14,50 @@ public abstract class Usuario extends Persona {
     public Usuario(String personaID, String nombres, String apellidos, String correo, String credencialVigente) {
         super(personaID, nombres, apellidos, correo);
         this.credencialVigente = credencialVigente;
-        this.librosPrestados  = new ArrayList<>();
+        this.librosPrestados = new ArrayList<>();
         multa = 0f;
     }
 
     /**
      * Esta función servirá para agregar ejemplares en cada usuario, solo guardará valores
      * diferentes a null, pero se tiene una seguridad para que no cruce algún null.
+     *
      * @param ejemplar : ejemplar será el objeto del ejemplar, para asi poder acceder
      *                 a los datos del ejemplar en cuestión
      */
     public void setLibrosPrestados(Ejemplar ejemplar) {
-        try{
-            if (ejemplar != null) {
-                //Si el ejemplar es diferente a null entonces lo guardará.
-                librosPrestados.add(ejemplar);
-            } else {
-                System.out.println("Ingrese un ejemplar existente.");
-            }
-        }catch(NullPointerException ex){
-            System.out.println("Error del tipo: " + ex.getMessage());
-            System.out.println("Error al agregar libro en el perfil del usuario.");
+        if (ejemplar != null) {
+            //Si el ejemplar es diferente a null entonces lo guardará.
+            librosPrestados.add(ejemplar);
+        } else {
+            System.out.println("Ingrese un ejemplar existente.");
         }
     }
-    public void setMulta(float multa){
-        if(multa >= 0){
+    //Obtener la cantidad de libros que el usuario se le prestaron y no ha devuelto.
+    public int obtenerCantidadLibros(){
+        return librosPrestados.size();
+    }
+
+
+    public void setMulta(float multa) {
+        if (multa >= 0) {
             //Si es mayor a cero o igual entonces no se agregará
             this.multa = multa;
-        }else{
+        } else {
             System.out.println("Ingrese una multa valida.");
         }
     }
+
     public float getMulta() {
         return multa;
     }
-
+    public String obtenerLista(){
+        StringBuilder cadena = new StringBuilder();
+        for(int i = 0; i < librosPrestados.size(); i++){
+            cadena.append(librosPrestados.get(i).mostrarDatos()).append("\n\n\n");
+        }
+        return cadena.toString();
+    }
 //Funciones abstractas
 
     /**
@@ -59,20 +68,21 @@ public abstract class Usuario extends Persona {
      */
     public abstract boolean aumentarDiaPrestamo();
 
+
     /**
      * Esta función servirá para saber si el usuario puede pedir un libro más, ya que el usuario
      * tiene un límite de libros prestados, esta función servirá para saber si el usuario
      * puede o no pedir más libros
      *
-     * @param cantidad : Este será solo la cantidad de ejemplares de la lista que guarda a los ejemplares
      * @return : regresara ya sea un true si la cantidad es menor a la cantidad límite, un false si es igual
      */
-    public abstract boolean validarLimiteLibros(int cantidad);
+    public abstract boolean validarLimiteLibros();
 
-    public String mostrarDatos(){
+    public String mostrarDatos() {
         return "ID: " + getPersonaID() +
                 "\nNombres: " + getNombres() +
                 "\nApellidos: " + getApellidos() +
-                "\nCorreo: " + getCorreo();
+                "\nCorreo: " + getCorreo() +
+                "\n Libros prestados: " + obtenerLista();
     }
 }
